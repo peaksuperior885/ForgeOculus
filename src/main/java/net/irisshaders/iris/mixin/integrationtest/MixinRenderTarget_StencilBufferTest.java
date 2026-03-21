@@ -34,7 +34,7 @@ public class MixinRenderTarget_StencilBufferTest {
 	@ModifyArgs(method = "createBuffers",
 		at = @At(value = "INVOKE",
 			target = "Lcom/mojang/blaze3d/platform/GlStateManager;_texImage2D(IIIIIIIILjava/nio/IntBuffer;)V",
-			ordinal = 0))
+			ordinal = 0), remap = false)
 	public void init(Args args) {
 		if (STENCIL) {
 			// internalformat
@@ -51,7 +51,7 @@ public class MixinRenderTarget_StencilBufferTest {
 
 	@ModifyArgs(method = "createBuffers",
 		at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;_glFramebufferTexture2D(IIIII)V"),
-		slice = @Slice(from = @At(value = "FIELD", target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;useDepth:Z", ordinal = 1)))
+		slice = @Slice(from = @At(value = "FIELD", target = "Lcom/mojang/blaze3d/pipeline/RenderTarget;useDepth:Z", ordinal = 1)), remap = false)
 	public void init2(Args args) {
 		if (STENCIL) {
 			// attachment

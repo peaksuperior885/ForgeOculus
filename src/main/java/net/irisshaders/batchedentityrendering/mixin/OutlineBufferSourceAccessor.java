@@ -7,6 +7,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(OutlineBufferSource.class)
 public interface OutlineBufferSourceAccessor {
-	@Accessor
-	MultiBufferSource.BufferSource getOutlineBufferSource();
+	@Accessor(remap = false)	MultiBufferSource.BufferSource getOutlineBufferSource();
 }

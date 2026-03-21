@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(DimensionSpecialEffects.class)
 public class MixinDimensionSpecialEffects {
-	@Inject(method = "getSunriseColor", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getSunriseColor", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$getSunriseColor(float timeOfDay, float partialTicks, CallbackInfoReturnable<float[]> cir) {
 		Entity cameraEntity = Minecraft.getInstance().getCameraEntity();
 		boolean hasBlindness = cameraEntity instanceof LivingEntity

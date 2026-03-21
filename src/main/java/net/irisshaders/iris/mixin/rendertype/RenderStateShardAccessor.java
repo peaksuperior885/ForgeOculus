@@ -6,11 +6,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(RenderStateShard.class)
 public interface RenderStateShardAccessor {
-	@Accessor("TRANSLUCENT_TRANSPARENCY")
+	@Accessor(value = "TRANSLUCENT_TRANSPARENCY", remap = false)
 	static RenderStateShard.TransparencyStateShard getTranslucentTransparency() {
 		throw new AssertionError();
 	}
 
-	@Accessor("name")
+	@Accessor(value = "name", remap = false)
 	String getName();
 }

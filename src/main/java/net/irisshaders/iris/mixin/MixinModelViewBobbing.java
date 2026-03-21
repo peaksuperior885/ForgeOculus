@@ -32,34 +32,29 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(GameRenderer.class)
 public abstract class MixinModelViewBobbing {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	Minecraft minecraft;
 
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private Camera mainCamera;
-	@Shadow
-	private int confusionAnimationTick;
+	@Shadow(remap = false)	private int confusionAnimationTick;
 	@Unique
 	private Matrix4fc bobbingEffectsModel;
 	@Unique
 	private boolean areShadersOn;
 
-	@Shadow
-	protected abstract void bobView(PoseStack pGameRenderer0, float pFloat1);
+	@Shadow(remap = false)	protected abstract void bobView(PoseStack pGameRenderer0, float pFloat1);
 
-	@Shadow
-	protected abstract void bobHurt(PoseStack pGameRenderer0, float pFloat1);
+	@Shadow(remap = false)	protected abstract void bobHurt(PoseStack pGameRenderer0, float pFloat1);
 
-	@Inject(method = "renderLevel", at = @At("HEAD"))
+	@Inject(method = "renderLevel", at = @At("HEAD"), remap = false)
 	private void iris$saveShadersOn(DeltaTracker deltaTracker, CallbackInfo ci) {
 		areShadersOn = Iris.isPackInUseQuick();
 	}
 
 	@ModifyArg(method = "renderLevel", index = 0,
 			at = @At(value = "INVOKE",
-					target = "Lnet/minecraft/client/renderer/GameRenderer;bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
+					target = "Lnet/minecraft/client/renderer/GameRenderer;bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"), remap = false)
 	private PoseStack iris$separateViewBobbing(PoseStack stack) {
 		if (!areShadersOn) return stack;
 
@@ -71,7 +66,7 @@ public abstract class MixinModelViewBobbing {
 
 	@Redirect(method = "renderLevel",
 			at = @At(value = "INVOKE",
-					target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
+					target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"), remap = false)
 	private void iris$stopBobbing(GameRenderer instance, PoseStack pGameRenderer0, float pFloat1) {
 		if (!areShadersOn) this.bobView(pGameRenderer0, pFloat1);
 	}
@@ -79,7 +74,7 @@ public abstract class MixinModelViewBobbing {
 
 	@Redirect(method = "renderLevel",
 			at = @At(value = "INVOKE",
-					target = "Lnet/minecraft/client/renderer/GameRenderer;bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"))
+					target = "Lnet/minecraft/client/renderer/GameRenderer;bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"), remap = false)
 	private void iris$saveBobbing(GameRenderer instance, PoseStack pGameRenderer0, float pFloat1) {
 		if (!areShadersOn) this.bobHurt(pGameRenderer0, pFloat1);
 	}
@@ -87,7 +82,7 @@ public abstract class MixinModelViewBobbing {
 
 	@Redirect(method = "renderLevel",
 			at = @At(value = "INVOKE",
-					target = "Ljava/lang/Double;floatValue()F"))
+					target = "Ljava/lang/Double;floatValue()F"), remap = false)
 	private float iris$disableConfusionWithShaders(Double instance) {
 		return areShadersOn ? 0.0f : instance.floatValue();
 	}

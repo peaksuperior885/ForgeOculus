@@ -17,7 +17,7 @@ import java.util.List;
 
 @Mixin(Program.class)
 public class MixinProgram {
-	@Redirect(method = "compileShaderInternal", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/preprocessor/GlslPreprocessor;process(Ljava/lang/String;)Ljava/util/List;"))
+	@Redirect(method = "compileShaderInternal", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/preprocessor/GlslPreprocessor;process(Ljava/lang/String;)Ljava/util/List;"), remap = false)
 	private static List<String> iris$allowSkippingMojImportDirectives(GlslPreprocessor includeHandler, String shaderSource) {
 		// Mojang's code for handling #moj_import directives uses regexes that can cause StackOverflowErrors.
 		//
@@ -30,7 +30,7 @@ public class MixinProgram {
 		return includeHandler.process(shaderSource);
 	}
 
-	@Inject(method = "compileShaderInternal", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;glGetShaderInfoLog(II)Ljava/lang/String;"), locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(method = "compileShaderInternal", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GlStateManager;glGetShaderInfoLog(II)Ljava/lang/String;"), locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
 	private static void iris$causeException(Program.Type arg, String string, InputStream inputStream, String string2, GlslPreprocessor arg2, CallbackInfoReturnable<Integer> cir, String string3, int i) {
 		cir.cancel();
 		throw new ShaderCompileException(string + arg.getExtension(), GlStateManager.glGetShaderInfoLog(i, 32768));

@@ -15,14 +15,10 @@ import org.spongepowered.asm.mixin.Unique;
 public abstract class MixinAdvancedShadowCullingFrustum implements ViewportProvider, Frustum {
 	@Unique
 	private final Vector3d position = new Vector3d();
-	@Shadow
-	public double x;
-	@Shadow
-	public double y;
-	@Shadow
-	public double z;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	public double x;
+	@Shadow(remap = false)	public double y;
+	@Shadow(remap = false)	public double z;
+	@Shadow(remap = false)	@Final
 	protected BoxCuller boxCuller;
 
 	@Shadow(remap = false)

@@ -35,15 +35,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(GameRenderer.class)
 public class MixinTweakFarPlane {
-	@Shadow
-	private float renderDistance;
+	@Shadow(remap = false)	private float renderDistance;
 
-	@Shadow
-	public float getDepthFar() {
+	@Shadow(remap = false)	public float getDepthFar() {
 		throw new AssertionError();
 	}
 
-	@Redirect(method = "getProjectionMatrix", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;getDepthFar()F"))
+	@Redirect(method = "getProjectionMatrix", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;getDepthFar()F"), remap = false)
 	private float iris$tweakViewDistanceToMatchOptiFine(GameRenderer renderer) {
 		if (!Iris.getCurrentPack().isPresent()) {
 			// Don't mess with the far plane if no shaderpack is loaded

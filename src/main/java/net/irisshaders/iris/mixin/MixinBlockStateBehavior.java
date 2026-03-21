@@ -31,17 +31,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(value = BlockBehaviour.BlockStateBase.class, priority = 990)
 public abstract class MixinBlockStateBehavior {
-	@Shadow
-	public abstract Block getBlock();
+	@Shadow(remap = false)	public abstract Block getBlock();
 
-	@Shadow
-	protected abstract BlockState asState();
+	@Shadow(remap = false)	protected abstract BlockState asState();
 
 	/**
 	 * @author IMS
 	 * @reason ambientOcclusionLevel support. Semantically, we're completely changing the meaning of the method.
 	 */
-	@Inject(method = "getShadeBrightness", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "getShadeBrightness", at = @At("RETURN"), cancellable = true, remap = false)
 	public void getShadeBrightness(BlockGetter pBlockBehaviour$BlockStateBase0, BlockPos pBlockPos1, CallbackInfoReturnable<Float> cir) {
 		float originalValue = cir.getReturnValue();
 		float aoLightValue = WorldRenderingSettings.INSTANCE.getAmbientOcclusionLevel();

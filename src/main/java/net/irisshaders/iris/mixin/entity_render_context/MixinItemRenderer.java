@@ -24,7 +24,7 @@ public abstract class MixinItemRenderer {
 	@Unique
 	private int previousBeValue;
 
-	@Inject(method = "render", at = @At(value = "HEAD"))
+	@Inject(method = "render", at = @At(value = "HEAD"), remap = false)
 	private void changeId(ItemStack pItemRenderer0, ItemDisplayContext pItemTransforms$TransformType1, boolean pBoolean2, PoseStack pPoseStack3, MultiBufferSource pMultiBufferSource4, int pInt5, int pInt6, BakedModel pBakedModel7, CallbackInfo ci) {
 		iris$setupId(pItemRenderer0);
 	}
@@ -47,7 +47,7 @@ public abstract class MixinItemRenderer {
 		}
 	}
 
-	@Inject(method = "render", at = @At(value = "RETURN"))
+	@Inject(method = "render", at = @At(value = "RETURN"), remap = false)
 	private void changeId3(CallbackInfo ci) {
 		CapturedRenderingState.INSTANCE.setCurrentRenderedItem(0);
 		CapturedRenderingState.INSTANCE.setCurrentBlockEntity(previousBeValue);

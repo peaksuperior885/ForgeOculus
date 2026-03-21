@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(Uniform.class)
 public class MixinUniform {
-	@Inject(method = "glGetUniformLocation", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "glGetUniformLocation", at = @At("RETURN"), cancellable = true, remap = false)
 	private static void iris$glGetUniformLocation(int programId, CharSequence name,
 												  CallbackInfoReturnable<Integer> cir) {
 		int location = cir.getReturnValue();

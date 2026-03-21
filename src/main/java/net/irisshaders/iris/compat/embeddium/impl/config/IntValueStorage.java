@@ -1,9 +1,9 @@
 package net.irisshaders.iris.compat.embeddium.impl.config;
 
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public class IntValueStorage extends ConfigValueStorage<Integer>{
-    public IntValueStorage(ModConfigSpec.ConfigValue<Integer> value) {
+    public IntValueStorage(ForgeConfigSpec.ConfigValue<Integer> value) {
         super(value);
     }
 }

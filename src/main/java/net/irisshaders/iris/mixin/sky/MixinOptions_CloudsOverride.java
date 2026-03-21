@@ -20,11 +20,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(value = Options.class, priority = 1010)
 public class MixinOptions_CloudsOverride {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private OptionInstance<Integer> renderDistance;
 
-	@Inject(method = "getCloudsType", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getCloudsType", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$overrideCloudsType(CallbackInfoReturnable<CloudStatus> cir) {
 		// Vanilla does not render clouds on low render distances, we have to mirror that check
 		// when injecting at the head.

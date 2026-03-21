@@ -43,11 +43,10 @@ public class MixinClientLanguage {
 	@Unique
 	private static final List<String> languageCodes = new ArrayList<>();
 
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private Map<String, String> storage;
 
-	@Inject(method = "appendFrom", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(method = "appendFrom", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
 	private static void injectFrom(String string, List<Resource> list, Map<String, String> map, CallbackInfo ci) {
 		String json = String.format(Locale.ROOT, "lang/%s.json", string);
 		if (Iris.class.getResource("/assets/iris/" + json) != null) {
@@ -55,7 +54,7 @@ public class MixinClientLanguage {
 		}
 	}
 
-	@Inject(method = "loadFrom", at = @At("HEAD"))
+	@Inject(method = "loadFrom", at = @At("HEAD"), remap = false)
 	private static void check(ResourceManager resourceManager, List<String> definitions, boolean bl, CallbackInfoReturnable<ClientLanguage> cir) {
 		// Make sure the language codes don't carry over!
 		languageCodes.clear();
@@ -64,7 +63,7 @@ public class MixinClientLanguage {
 		new LinkedList<>(definitions).descendingIterator().forEachRemaining(languageCodes::add);
 	}
 
-	@Inject(method = "getOrDefault", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getOrDefault", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$addLanguageEntries(String key, String value, CallbackInfoReturnable<String> cir) {
 		String override = iris$lookupOverriddenEntry(key);
 
@@ -73,7 +72,7 @@ public class MixinClientLanguage {
 		}
 	}
 
-	@Inject(method = "has", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "has", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$addLanguageEntriesToTranslationChecks(String key, CallbackInfoReturnable<Boolean> cir) {
 		String override = iris$lookupOverriddenEntry(key);
 

@@ -29,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinEntityRenderDispatcher {
 	// Inject after MatrixStack#push since at this point we know that most cancellation checks have already passed.
 	@ModifyVariable(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", shift = At.Shift.AFTER),
-		allow = 1, require = 1)
+		allow = 1, require = 1, remap = false)
 	private MultiBufferSource iris$beginEntityRender(MultiBufferSource bufferSource, Entity entity) {
 		if (!(bufferSource instanceof Groupable)) {
 			// Fully batched entity rendering is not being used, do not use this wrapper!!!
@@ -59,7 +59,7 @@ public class MixinEntityRenderDispatcher {
 
 	// Inject before MatrixStack#pop so that our wrapper stack management operations naturally line up
 	// with vanilla's MatrixStack management functions.
-	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;popPose()V"))
+	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;popPose()V"), remap = false)
 	private void iris$endEntityRender(Entity entity, double x, double y, double z, float yaw, float tickDelta,
 									  PoseStack poseStack, MultiBufferSource bufferSource, int light,
 									  CallbackInfo ci) {

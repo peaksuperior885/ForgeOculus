@@ -21,7 +21,7 @@ import java.util.SortedSet;
 
 @Mixin(LevelRenderer.class)
 public interface LevelRendererAccessor {
-	@Accessor("entityRenderDispatcher")
+	@Accessor(value = "entityRenderDispatcher", remap = false)
 	EntityRenderDispatcher getEntityRenderDispatcher();
 
 	@Invoker("renderSectionLayer")
@@ -33,24 +33,23 @@ public interface LevelRendererAccessor {
 	@Invoker("renderEntity")
 	void invokeRenderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, PoseStack poseStack, MultiBufferSource bufferSource);
 
-	@Accessor("level")
+	@Accessor(value = "level", remap = false)
 	ClientLevel getLevel();
 
-	@Accessor("renderBuffers")
+	@Accessor(value = "renderBuffers", remap = false)
 	RenderBuffers getRenderBuffers();
 
-	@Accessor("renderBuffers")
+	@Accessor(value = "renderBuffers", remap = false)
 	void setRenderBuffers(RenderBuffers buffers);
 
-	@Accessor("generateClouds")
+	@Accessor(value = "generateClouds", remap = false)
 	boolean shouldRegenerateClouds();
 
-	@Accessor("generateClouds")
+	@Accessor(value = "generateClouds", remap = false)
 	void setShouldRegenerateClouds(boolean shouldRegenerate);
 
 	@Invoker
 	boolean invokeDoesMobEffectBlockSky(Camera mainCamera);
 
-	@Accessor
-	Long2ObjectMap<SortedSet<BlockDestructionProgress>> getDestructionProgress();
+	@Accessor(remap = false)	Long2ObjectMap<SortedSet<BlockDestructionProgress>> getDestructionProgress();
 }

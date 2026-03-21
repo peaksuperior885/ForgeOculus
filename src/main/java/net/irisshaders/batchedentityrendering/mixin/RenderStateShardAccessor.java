@@ -6,17 +6,17 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(RenderStateShard.class)
 public interface RenderStateShardAccessor {
-	@Accessor("NO_TRANSPARENCY")
+	@Accessor(value = "NO_TRANSPARENCY", remap = false)
 	static RenderStateShard.TransparencyStateShard getNO_TRANSPARENCY() {
 		throw new AssertionError();
 	}
 
-	@Accessor("GLINT_TRANSPARENCY")
+	@Accessor(value = "GLINT_TRANSPARENCY", remap = false)
 	static RenderStateShard.TransparencyStateShard getGLINT_TRANSPARENCY() {
 		throw new AssertionError();
 	}
 
-	@Accessor("CRUMBLING_TRANSPARENCY")
+	@Accessor(value = "CRUMBLING_TRANSPARENCY", remap = false)
 	static RenderStateShard.TransparencyStateShard getCRUMBLING_TRANSPARENCY() {
 		throw new AssertionError();
 	}

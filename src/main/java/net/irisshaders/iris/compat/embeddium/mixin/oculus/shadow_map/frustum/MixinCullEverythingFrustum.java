@@ -1,4 +1,4 @@
-package net.irisshaders.iris.compat.embeddium.mixin.shadow_map.frustum;
+package net.irisshaders.iris.compat.embeddium.mixin.oculus.shadow_map.frustum;
 
 
 import net.irisshaders.iris.shadows.frustum.CullEverythingFrustum;

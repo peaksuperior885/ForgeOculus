@@ -12,12 +12,10 @@ import java.util.SequencedMap;
 
 @Mixin(MultiBufferSource.BufferSource.class)
 public class MixinBufferSource implements MemoryTrackingBuffer {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	protected ByteBufferBuilder sharedBuffer;
 
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	protected SequencedMap<RenderType, ByteBufferBuilder> fixedBuffers;
 
 	@Override

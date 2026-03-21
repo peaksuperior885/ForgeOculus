@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBiomes {
 	private static int currentId = 0;
 
-	@Inject(method = "register", at = @At("TAIL"))
+	@Inject(method = "register", at = @At("TAIL"), remap = false)
 	private static void iris$registerBiome(String string, CallbackInfoReturnable<ResourceKey<Biome>> cir) {
 		BiomeUniforms.getBiomeMap().put(cir.getReturnValue(), currentId++);
 	}

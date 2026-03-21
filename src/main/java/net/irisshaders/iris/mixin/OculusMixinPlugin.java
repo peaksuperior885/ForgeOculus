@@ -1,6 +1,6 @@
 package net.irisshaders.iris.mixin;
 
-import net.neoforged.fml.loading.LoadingModList;
+import net.minecraftforge.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -9,41 +9,41 @@ import java.util.List;
 import java.util.Set;
 
 public class OculusMixinPlugin implements IMixinConfigPlugin {
-    @Override
-    public void onLoad(String s) {
 
+    @Override
+    public void onLoad(String mixinPackage) {
+        // Could register extra logic if needed
     }
 
     @Override
     public String getRefMapperConfig() {
-        return null;
+        return null; // Let the mixin config handle it
     }
 
     @Override
-    public boolean shouldApplyMixin(String s, String s1) {
-        // Forge 1.20.1 and older load mixins even if there is a mod loading error, but
-        // don't load ATs, which causes a ton of support requests from our mixins failing
-        // to apply. The solution is to just not apply them ourselves if there is an error.
-        return !LoadingModList.get().hasErrors();
+    public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+        // Force it to true so we can actually see the errors if they happen
+        return true;
     }
 
     @Override
-    public void acceptTargets(Set<String> set, Set<String> set1) {
-
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+        // Not needed for now
     }
 
     @Override
     public List<String> getMixins() {
+        // You could dynamically register mixins here if needed
         return List.of();
     }
 
     @Override
-    public void preApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {
-
+    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        // Optional: pre-processing before mixin application
     }
 
     @Override
-    public void postApply(String s, ClassNode classNode, String s1, IMixinInfo iMixinInfo) {
-
+    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        // Optional: post-processing after mixin application
     }
 }

@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(SimpleTexture.class)
 public interface SimpleTextureAccessor {
-	@Accessor("location")
+	@Accessor(value = "location", remap = false)
 	ResourceLocation getLocation();
 }

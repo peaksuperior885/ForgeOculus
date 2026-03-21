@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(SpriteContents.FrameInfo.class)
 public interface SpriteContentsFrameInfoAccessor {
-	@Accessor("index")
+	@Accessor(value = "index", remap = false)
 	int getIndex();
 
-	@Accessor("time")
+	@Accessor(value = "time", remap = false)
 	int getTime();
 }

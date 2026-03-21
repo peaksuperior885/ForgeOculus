@@ -13,15 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GlStateManager.BooleanState.class)
 public class MixinBooleanState implements BooleanStateExtended {
-	@Shadow
-	public boolean enabled;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	public boolean enabled;
+	@Shadow(remap = false)	@Final
 	private int state;
 	@Unique
 	private boolean stateUnknown;
 
-	@Inject(method = "setEnabled", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "setEnabled", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$setUnknownState(boolean enable, CallbackInfo ci) {
 		if (stateUnknown) {
 			ci.cancel();

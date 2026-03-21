@@ -18,10 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FogRenderer.class)
 public class MixinFogRenderer {
-	@Shadow
-	private static float fogRed, fogGreen, fogBlue;
+	@Shadow(remap = false)	private static float fogRed, fogGreen, fogBlue;
 
-	@Inject(method = "setupFog", at = @At("HEAD"))
+	@Inject(method = "setupFog", at = @At("HEAD"), remap = false)
 	private static void iris$setupLegacyWaterFog(Camera camera, FogRenderer.FogMode $$1, float $$2, boolean $$3, float $$4, CallbackInfo ci) {
 		if (camera.getFluidInCamera() == FogType.WATER) {
 			Entity entity = camera.getEntity();
@@ -43,7 +42,7 @@ public class MixinFogRenderer {
 		}
 	}
 
-	@Inject(method = "setupColor", at = @At("TAIL"))
+	@Inject(method = "setupColor", at = @At("TAIL"), remap = false)
 	private static void render(Camera camera, float tickDelta, ClientLevel level, int i, float f, CallbackInfo ci) {
 		CapturedRenderingState.INSTANCE.setFogColor(fogRed, fogGreen, fogBlue);
 	}

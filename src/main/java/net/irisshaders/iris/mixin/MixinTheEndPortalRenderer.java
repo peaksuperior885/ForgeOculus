@@ -29,17 +29,15 @@ public class MixinTheEndPortalRenderer {
 	@Unique
 	private static final float BLUE = 0.2f;
 
-	@Shadow
-	protected float getOffsetUp() {
+	@Shadow(remap = false)	protected float getOffsetUp() {
 		return 0.75F;
 	}
 
-	@Shadow
-	protected float getOffsetDown() {
+	@Shadow(remap = false)	protected float getOffsetDown() {
 		return 0.375F;
 	}
 
-	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "render", at = @At("HEAD"), cancellable = true, remap = false)
 	public void iris$onRender(TheEndPortalBlockEntity entity, float tickDelta, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, int overlay, CallbackInfo ci) {
 		if (!Iris.getCurrentPack().isPresent()) {
 			return;

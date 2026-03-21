@@ -16,7 +16,7 @@ import java.util.function.IntFunction;
 @Mixin(ChunkShaderInterface.class)
 public class MixinChunkShaderInterface {
 
-	@WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/render/chunk/shader/ShaderBindingContext;bindUniform(Ljava/lang/String;Ljava/util/function/IntFunction;)Lorg/embeddedt/embeddium/impl/gl/shader/uniform/GlUniform;"))
+	@WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/render/chunk/shader/ShaderBindingContext;bindUniform(Ljava/lang/String;Ljava/util/function/IntFunction;)Lorg/embeddedt/embeddium/impl/gl/shader/uniform/GlUniform;"), remap = false)
 	private GlUniform init(ShaderBindingContext instance, String s, IntFunction<?> uIntFunction, Operation<?> original, @Local ChunkShaderOptions opts) {
 		if (opts == EmbeddiumShader.OPTS) {
 			return null;

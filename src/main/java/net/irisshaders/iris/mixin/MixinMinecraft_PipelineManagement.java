@@ -5,8 +5,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +19,7 @@ public class MixinMinecraft_PipelineManagement {
 	/**
 	 * Should run before the Minecraft.level field is updated after disconnecting from a server or leaving a singleplayer world
 	 */
-	@Inject(method = "clearClientLevel", at = @At("HEAD"))
+	@Inject(method = "clearClientLevel", at = @At("HEAD"), remap = false)
 	public void iris$trackLastDimensionOnLeave(Screen arg, CallbackInfo ci) {
 		Iris.lastDimension = Iris.getCurrentDimension();
 	}
@@ -28,7 +28,7 @@ public class MixinMinecraft_PipelineManagement {
 	 * Should run before the Minecraft.level field is updated after receiving a login or respawn packet
 	 * NB: Not on leave, another inject is used for that
 	 */
-	@Inject(method = "setLevel", at = @At("HEAD"))
+	@Inject(method = "setLevel", at = @At("HEAD"), remap = false)
 	private void iris$trackLastDimensionOnLevelChange(ClientLevel clientLevel, ReceivingLevelScreen.Reason reason, CallbackInfo ci) {
 		Iris.lastDimension = Iris.getCurrentDimension();
 	}
@@ -47,7 +47,7 @@ public class MixinMinecraft_PipelineManagement {
 	 * <p>
 	 * See: <a href="https://github.com/IrisShaders/Iris/issues/1330">Issue 1330</a>
 	 */
-	@Inject(method = "updateLevelInEngines", at = @At("HEAD"))
+	@Inject(method = "updateLevelInEngines", at = @At("HEAD"), remap = false)
 	private void iris$resetPipeline(@Nullable ClientLevel level, CallbackInfo ci) {
 		if (!Iris.getCurrentDimension().equals(Iris.lastDimension)) {
 			Iris.logger.info("Reloading pipeline on dimension change: " + Iris.lastDimension + " => " + Iris.getCurrentDimension());

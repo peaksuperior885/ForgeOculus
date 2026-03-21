@@ -26,12 +26,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(value = LevelRenderer.class, priority = 1010)
 public abstract class MixinPreventRebuildNearInShadowPass {
-    @Shadow
-    @Final
+    @Shadow(remap = false)    @Final
     private ObjectArrayList<SectionRenderDispatcher.RenderSection> visibleSections;
 
     @Inject(method = "setupRender",
-            at = @At(value = "TAIL"))
+            at = @At(value = "TAIL"), remap = false)
     private void iris$preventRebuildNearInShadowPass(Camera camera, Frustum frustum, boolean bl, boolean bl2, CallbackInfo ci) {
         if (ShadowRenderer.ACTIVE) {
             for (SectionRenderDispatcher.RenderSection chunk : this.visibleSections) {

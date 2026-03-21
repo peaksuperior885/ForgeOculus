@@ -15,14 +15,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(RenderSectionManager.class)
+@Mixin(value = RenderSectionManager.class,remap = false)
 public class MixinRenderSectionManager {
-    @Shadow
-    private @NotNull SortedRenderLists renderLists;
+    @Shadow(remap = false)    private @NotNull SortedRenderLists renderLists;
     @Unique
     private @NotNull SortedRenderLists shadowRenderLists = SortedRenderLists.empty();
 
-    @Redirect(method = "createTerrainRenderList", at = @At(value = "FIELD", target = "Lorg/embeddedt/embeddium/impl/render/chunk/RenderSectionManager;renderLists:Lorg/embeddedt/embeddium/impl/render/chunk/lists/SortedRenderLists;"))
+    @Redirect(method = "createTerrainRenderList", at = @At(value = "FIELD", target = "Lorg/embeddedt/embeddium/impl/render/chunk/RenderSectionManager;renderLists:Lorg/embeddedt/embeddium/impl/render/chunk/lists/SortedRenderLists;"), remap = false)
     private void useShadowRenderList(RenderSectionManager instance, SortedRenderLists value) {
         if (ShadowRenderingState.areShadowsCurrentlyBeingRendered()) {
             shadowRenderLists = value;
@@ -31,7 +30,7 @@ public class MixinRenderSectionManager {
         }
     }
 
-    @Inject(method = "update", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/render/chunk/RenderSectionManager;createTerrainRenderList(Lnet/minecraft/client/Camera;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;IZ)V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "update", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/render/chunk/RenderSectionManager;createTerrainRenderList(Lnet/minecraft/client/Camera;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;IZ)V", shift = At.Shift.AFTER), cancellable = true, remap = false)
     private void cancelIfShadow(Camera camera, Viewport viewport, int frame, boolean spectator, CallbackInfo ci) {
         if (ShadowRenderingState.areShadowsCurrentlyBeingRendered()) ci.cancel();
     }

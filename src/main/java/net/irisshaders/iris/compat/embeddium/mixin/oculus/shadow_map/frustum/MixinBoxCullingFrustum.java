@@ -18,8 +18,7 @@ public class MixinBoxCullingFrustum implements Frustum, ViewportProvider {
 	@Shadow(remap = false)
 	@Final
 	private BoxCuller boxCuller;
-	@Shadow
-	private double x, y, z;
+	@Shadow(remap = false)	private double x, y, z;
 
 	@Override
 	public Viewport sodium$createViewport() {

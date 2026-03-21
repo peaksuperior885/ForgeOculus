@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(targets = "org.embeddedt.embeddium.impl.gl.device.GLRenderDevice$ImmediateDrawCommandList", remap = false)
 public class MixinGlRenderDevice {
-	@Redirect(method = "multiDrawElementsBaseVertex", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/gl/tessellation/GlPrimitiveType;getId()I"))
+	@Redirect(method = "multiDrawElementsBaseVertex", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/gl/tessellation/GlPrimitiveType;getId()I"), remap = false)
 	private int replaceId(GlPrimitiveType instance) {
 		if (ImmediateState.usingTessellation) return GL43C.GL_PATCHES;
 		return instance.getId();

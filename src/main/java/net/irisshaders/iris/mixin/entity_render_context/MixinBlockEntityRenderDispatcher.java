@@ -37,7 +37,7 @@ public class MixinBlockEntityRenderDispatcher {
 	// captured by the lambda shortly afterwards, and therefore our ModifyVariable call becomes ineffective!
 	@ModifyVariable(method = "render", at = @At(value = "INVOKE",
 		target = "Lnet/minecraft/world/level/block/entity/BlockEntityType;isValid(Lnet/minecraft/world/level/block/state/BlockState;)Z"),
-		allow = 1, require = 1, argsOnly = true)
+		allow = 1, require = 1, argsOnly = true, remap = false)
 	private MultiBufferSource iris$wrapBufferSource(MultiBufferSource bufferSource, BlockEntity blockEntity) {
 		if (!(bufferSource instanceof Groupable)) {
 			// Fully batched entity rendering is not being used, do not use this wrapper!!!
@@ -61,7 +61,7 @@ public class MixinBlockEntityRenderDispatcher {
 	}
 
 
-	@Inject(method = "render", at = @At(value = "INVOKE", target = RUN_REPORTED, shift = At.Shift.AFTER))
+	@Inject(method = "render", at = @At(value = "INVOKE", target = RUN_REPORTED, shift = At.Shift.AFTER), remap = false)
 	private void iris$afterRender(BlockEntity blockEntity, float tickDelta, PoseStack matrix,
 								  MultiBufferSource bufferSource, CallbackInfo ci) {
 		CapturedRenderingState.INSTANCE.setCurrentBlockEntity(0);

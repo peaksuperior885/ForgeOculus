@@ -20,16 +20,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = VertexSerializerRegistryImpl.class, remap = false)
 public abstract class MixinVertexSerializerCache {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private Long2ReferenceMap<VertexSerializer> cache;
 
-	@Shadow
-	protected static long createKey(VertexFormatDescription a, VertexFormatDescription b) {
+	@Shadow(remap = false)	protected static long createKey(VertexFormatDescription a, VertexFormatDescription b) {
 		return 0;
 	}
 
-	@Inject(method = "<init>", at = @At("TAIL"))
+	@Inject(method = "<init>", at = @At("TAIL"), remap = false)
 	private void putSerializerIris(CallbackInfo ci) {
 		cache.put(createKey(VertexFormatRegistry.instance().get(DefaultVertexFormat.NEW_ENTITY), VertexFormatRegistry.instance().get(IrisVertexFormats.ENTITY)), new ModelToEntityVertexSerializer());
 		cache.put(createKey(VertexFormatRegistry.instance().get(IrisVertexFormats.ENTITY), VertexFormatRegistry.instance().get(IrisVertexFormats.TERRAIN)), new IrisEntityToTerrainVertexSerializer());

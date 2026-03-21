@@ -40,7 +40,7 @@ public class MixinEntityRenderDispatcher {
 	@Unique
 	private static int cachedId;
 
-	@Inject(method = RENDER_SHADOW, at = @At("HEAD"), cancellable = true)
+	@Inject(method = RENDER_SHADOW, at = @At("HEAD"), cancellable = true, remap = false)
 	private static void iris$maybeSuppressEntityShadow(PoseStack poseStack, MultiBufferSource bufferSource,
 													   Entity entity, float opacity, float tickDelta, LevelReader level,
 													   float radius, CallbackInfo ci) {
@@ -56,14 +56,14 @@ public class MixinEntityRenderDispatcher {
 		}
 	}
 
-	@Inject(method = "renderShadow", at = @At("RETURN"))
+	@Inject(method = "renderShadow", at = @At("RETURN"), remap = false)
 	private static void restoreShadow(PoseStack pPoseStack0, MultiBufferSource pMultiBufferSource1, Entity pEntity2, float pFloat3, float pFloat4, LevelReader pLevelReader5, float pFloat6, CallbackInfo ci) {
 		CapturedRenderingState.INSTANCE.setCurrentEntity(cachedId);
 		cachedId = 0;
 	}
 
 	// The underlying method called by renderShadow.
-	@Inject(method = "renderBlockShadow", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "renderBlockShadow", at = @At("HEAD"), cancellable = true, remap = false)
 	private static void renderBlockShadow(PoseStack.Pose pPoseStack$Pose0, VertexConsumer pVertexConsumer1, ChunkAccess pChunkAccess2, LevelReader pLevelReader3, BlockPos pBlockPos4, double pDouble5, double pDouble6, double pDouble7, float pFloat8, float pFloat9, CallbackInfo ci) {
 		iris$maybeSuppressShadow(ci);
 	}
@@ -91,7 +91,7 @@ public class MixinEntityRenderDispatcher {
 		return false;
 	}
 
-	@Inject(method = "renderFlame", at = @At("HEAD"))
+	@Inject(method = "renderFlame", at = @At("HEAD"), remap = false)
 	private void iris$setFlameId(PoseStack pEntityRenderDispatcher0, MultiBufferSource pMultiBufferSource1, Entity pEntity2, Quaternionf pQuaternionf3, CallbackInfo ci) {
 		Object2IntFunction<NamespacedId> entityIds = WorldRenderingSettings.INSTANCE.getEntityIds();
 
@@ -103,7 +103,7 @@ public class MixinEntityRenderDispatcher {
 		CapturedRenderingState.INSTANCE.setCurrentEntity(entityIds.getInt(flameId));
 	}
 
-	@Inject(method = "renderFlame", at = @At("RETURN"))
+	@Inject(method = "renderFlame", at = @At("RETURN"), remap = false)
 	private void restoreFlameId(PoseStack pEntityRenderDispatcher0, MultiBufferSource pMultiBufferSource1, Entity pEntity2, Quaternionf pQuaternionf3, CallbackInfo ci) {
 		CapturedRenderingState.INSTANCE.setCurrentEntity(cachedId);
 		cachedId = 0;

@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(LightTexture.class)
 public interface LightTextureAccessor {
-	@Accessor("lightTexture")
+	@Accessor(value = "lightTexture", remap = false)
 	DynamicTexture getLightTexture();
 }

@@ -16,12 +16,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 // Uses a priority of 999 to apply before the main Iris mixins to draw entities before deferred runs.
 @Mixin(value = LevelRenderer.class, priority = 999)
 public class MixinLevelRenderer {
-	@Inject(method = "renderLevel", at = @At("HEAD"))
+	@Inject(method = "renderLevel", at = @At("HEAD"), remap = false)
 	private void iris$immediateStateBeginLevelRender(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
 		ImmediateState.isRenderingLevel = true;
 	}
 
-	@Inject(method = "renderLevel", at = @At("RETURN"))
+	@Inject(method = "renderLevel", at = @At("RETURN"), remap = false)
 	private void iris$immediateStateEndLevelRender(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
 		ImmediateState.isRenderingLevel = false;
 	}

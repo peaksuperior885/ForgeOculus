@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPacketListener.class)
 public class MixinClientPacketListener {
-    @Inject(method = "handleLogin", at = @At("TAIL"))
+    @Inject(method = "handleLogin", at = @At("TAIL"), remap = false)
     private void iris$showUpdateMessage(ClientboundLoginPacket a, CallbackInfo ci) {
         if (Minecraft.getInstance().player == null) {
             return;
@@ -28,11 +28,6 @@ public class MixinClientPacketListener {
         Iris.getStoredError().ifPresent(e ->
                 Minecraft.getInstance().player.displayClientMessage(Component.translatable(e instanceof ShaderCompileException ? "iris.load.failure.shader" : "iris.load.failure.generic").append(Component.literal("Copy Info").withStyle(arg -> arg.withUnderlined(true).withColor(ChatFormatting.BLUE).withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, e.getMessage())).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("chat.copy.click"))))), false));
 
-        if (Iris.loadedIncompatiblePack()) {
             Minecraft.getInstance().gui.setTimes(10, 70, 140);
-            Iris.logger.warn("Incompatible pack for DH!");
-            Minecraft.getInstance().player.displayClientMessage(Component.literal("This pack doesn't have DH support.").withStyle(ChatFormatting.BOLD, ChatFormatting.RED), false);
-            Minecraft.getInstance().player.displayClientMessage(Component.literal("Distant Horizons (DH) chunks won't show up. This isn't a bug, get another shader.").withStyle(ChatFormatting.RED), false);
-        }
     }
 }

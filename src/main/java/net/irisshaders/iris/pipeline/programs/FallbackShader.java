@@ -9,6 +9,7 @@ import net.irisshaders.iris.gl.IrisRenderSystem;
 import net.irisshaders.iris.gl.blending.BlendModeOverride;
 import net.irisshaders.iris.gl.framebuffer.GlFramebuffer;
 import net.irisshaders.iris.gl.texture.TextureType;
+import net.irisshaders.iris.mixin.accessor.ShaderInstanceAccessor;
 import net.irisshaders.iris.pipeline.IrisRenderingPipeline;
 import net.irisshaders.iris.samplers.IrisSamplers;
 import net.irisshaders.iris.uniforms.CapturedRenderingState;
@@ -91,7 +92,7 @@ public class FallbackShader extends ShaderInstance {
 
 		ProgramManager.glUseProgram(this.getId());
 
-		List<Uniform> uniformList = super.uniforms;
+		List<Uniform> uniformList = ((ShaderInstanceAccessor) this).getUniforms();
 		for (Uniform uniform : uniformList) {
 			uploadIfNotNull(uniform);
 		}

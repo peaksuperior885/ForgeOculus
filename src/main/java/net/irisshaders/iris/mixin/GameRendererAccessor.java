@@ -10,22 +10,23 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(GameRenderer.class)
 public interface GameRendererAccessor {
-	@Accessor
+	// We set remap = true (default) to ensure Forge finds the obfuscated field
+	@Accessor("blurEffect")
 	PostChain getBlurEffect();
 
-	@Accessor
+	@Accessor("renderHand")
 	boolean getRenderHand();
 
-	@Accessor
+	@Accessor("panoramicMode")
 	boolean getPanoramicMode();
 
-	@Invoker
+	@Invoker("bobView")
 	void invokeBobView(PoseStack poseStack, float tickDelta);
 
-	@Invoker
+	@Invoker("bobHurt")
 	void invokeBobHurt(PoseStack poseStack, float tickDelta);
 
-	@Invoker
+	@Invoker("getFov")
 	double invokeGetFov(Camera camera, float tickDelta, boolean b);
 
 	@Invoker("shouldRenderBlockOutline")

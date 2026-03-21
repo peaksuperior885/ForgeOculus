@@ -18,13 +18,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = ShaderChunkRenderer.class, remap = false)
 public abstract class MixinShaderChunkRenderer {
-	@Shadow
-	protected abstract GlProgram<ChunkShaderInterface> compileProgram(ChunkShaderOptions options);
+	@Shadow(remap = false)	protected abstract GlProgram<ChunkShaderInterface> compileProgram(ChunkShaderOptions options);
 
-	@Shadow
-	protected GlProgram<ChunkShaderInterface> activeProgram;
+	@Shadow(remap = false)	protected GlProgram<ChunkShaderInterface> activeProgram;
 
-	@Redirect(method = "begin", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/render/chunk/ShaderChunkRenderer;compileProgram(Lorg/embeddedt/embeddium/impl/render/chunk/shader/ChunkShaderOptions;)Lorg/embeddedt/embeddium/impl/gl/shader/GlProgram;"))
+	@Redirect(method = "begin", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/render/chunk/ShaderChunkRenderer;compileProgram(Lorg/embeddedt/embeddium/impl/render/chunk/shader/ChunkShaderOptions;)Lorg/embeddedt/embeddium/impl/gl/shader/GlProgram;"), remap = false)
 	private GlProgram<ChunkShaderInterface> redirectIrisProgram(ShaderChunkRenderer instance, ChunkShaderOptions options, TerrainRenderPass pass) {
 		WorldRenderingPipeline pipeline = Iris.getPipelineManager().getPipelineNullable();
 
@@ -42,7 +40,7 @@ public abstract class MixinShaderChunkRenderer {
 		return program;
 	}
 
-	@Inject(method = "end", at = @At("HEAD"))
+	@Inject(method = "end", at = @At("HEAD"), remap = false)
 	private void end(TerrainRenderPass pass, CallbackInfo ci) {
 		if (this.activeProgram.getInterface() instanceof EmbeddiumShader shader) {
 			shader.resetState();

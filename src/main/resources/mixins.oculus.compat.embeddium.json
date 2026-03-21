@@ -3,7 +3,7 @@
   "package": "net.irisshaders.iris.compat.embeddium.mixin",
   "plugin": "net.irisshaders.iris.compat.embeddium.mixin.IrisSodiumCompatMixinPlugin",
   "required": true,
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_21",
   "injectors": {
     "defaultRequire": 1
   },
@@ -14,7 +14,7 @@
     "oculus.shadow_map.frustum.MixinAdvancedShadowCullingFrustum",
     "oculus.shadow_map.frustum.MixinBoxCullingFrustum",
     "oculus.shadow_map.frustum.MixinNonCullingFrustum",
-    "shadow_map.frustum.MixinCullEverythingFrustum"
+    "oculus.shadow_map.frustum.MixinCullEverythingFrustum"
   ],
   "mixins": [
     "monocle.mixin.EmbeddiumWorldRendererAssessor",

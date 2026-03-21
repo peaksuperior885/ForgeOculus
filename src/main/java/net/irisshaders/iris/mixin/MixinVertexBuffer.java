@@ -13,17 +13,16 @@ public class MixinVertexBuffer implements VertexBufferHelper {
 	private static VertexBuffer current;
 	private static VertexBuffer saved;
 
-	@Inject(method = "unbind()V", at = @At("HEAD"))
+	@Inject(method = "unbind()V", at = @At("HEAD"), remap = false)
 	private static void unbindHelper(CallbackInfo ci) {
 		current = null;
 	}
 
-	@Shadow
-	public void bind() {
+	@Shadow(remap = false)	public void bind() {
 		throw new IllegalStateException("not shadowed");
 	}
 
-	@Inject(method = "bind()V", at = @At("HEAD"))
+	@Inject(method = "bind()V", at = @At("HEAD"), remap = false)
 	private void bindHelper(CallbackInfo ci) {
 		current = (VertexBuffer) (Object) this;
 	}

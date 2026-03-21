@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(VertexFormat.class)
 public class MixinVertexFormat {
-	@Inject(method = "setupBufferState", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "setupBufferState", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$onSetupBufferState(CallbackInfo ci) {
 		if (Iris.isPackInUseQuick() && ImmediateState.renderWithExtendedVertexFormat) {
 			if ((Object) this == DefaultVertexFormat.BLOCK) {
@@ -34,7 +34,7 @@ public class MixinVertexFormat {
 		}
 	}
 
-	@Inject(method = "clearBufferState", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "clearBufferState", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$onClearBufferState(CallbackInfo ci) {
 		if (Iris.isPackInUseQuick() && ImmediateState.renderWithExtendedVertexFormat) {
 			if ((Object) this == DefaultVertexFormat.BLOCK) {

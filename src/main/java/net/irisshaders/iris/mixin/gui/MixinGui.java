@@ -23,15 +23,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
 public class MixinGui {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private Minecraft minecraft;
 
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private DebugScreenOverlay debugOverlay;
 
-	@WrapMethod(method = "render")
+	@WrapMethod(method = "render", remap = false)
 	public void iris$handleHudHidingScreens(GuiGraphics guiGraphics, DeltaTracker deltaTracker, Operation<Void> original) {
 		Screen screen = this.minecraft.screen;
 
@@ -46,7 +44,7 @@ public class MixinGui {
 		GLDebug.popGroup();
 	}
 
-	@Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$disableVignetteRendering(GuiGraphics pGui0, Entity pEntity1, CallbackInfo ci) {
 		WorldRenderingPipeline pipeline = Iris.getPipelineManager().getPipelineNullable();
 

@@ -28,19 +28,16 @@ public class MixinRenderBuffers implements RenderBuffersExt, MemoryTrackingRende
 	private int begins = 0;
 	@Unique
 	private int maxBegins = 0;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private MultiBufferSource.BufferSource bufferSource;
 
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private MultiBufferSource.BufferSource crumblingBufferSource;
 
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private SectionBufferBuilderPack fixedBufferPack;
 
-	@Inject(method = "bufferSource", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "bufferSource", at = @At("HEAD"), cancellable = true, remap = false)
 	private void batchedentityrendering$replaceBufferSource(CallbackInfoReturnable<MultiBufferSource.BufferSource> cir) {
 		if (begins == 0) {
 			return;
@@ -49,7 +46,7 @@ public class MixinRenderBuffers implements RenderBuffersExt, MemoryTrackingRende
 		cir.setReturnValue(buffered);
 	}
 
-	@Inject(method = "crumblingBufferSource", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "crumblingBufferSource", at = @At("HEAD"), cancellable = true, remap = false)
 	private void batchedentityrendering$replaceCrumblingBufferSource(CallbackInfoReturnable<MultiBufferSource.BufferSource> cir) {
 		if (begins == 0) {
 			return;
@@ -67,7 +64,7 @@ public class MixinRenderBuffers implements RenderBuffersExt, MemoryTrackingRende
 		cir.setReturnValue(buffered.getUnflushableWrapper());
 	}
 
-	@Inject(method = "outlineBufferSource", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "outlineBufferSource", at = @At("HEAD"), cancellable = true, remap = false)
 	private void batchedentityrendering$replaceOutlineBufferSource(CallbackInfoReturnable<OutlineBufferSource> provider) {
 		if (begins == 0) {
 			return;

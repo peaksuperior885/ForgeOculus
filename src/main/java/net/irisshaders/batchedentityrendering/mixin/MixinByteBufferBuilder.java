@@ -7,14 +7,11 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ByteBufferBuilder.class)
 public abstract class MixinByteBufferBuilder implements MemoryTrackingBuffer {
-    @Shadow
-    private int capacity;
+    @Shadow(remap = false)    private int capacity;
 
-    @Shadow
-    private int writeOffset;
+    @Shadow(remap = false)    private int writeOffset;
 
-    @Shadow
-    public abstract void close();
+    @Shadow(remap = false)    public abstract void close();
 
     @Override
     public long getAllocatedSize() {

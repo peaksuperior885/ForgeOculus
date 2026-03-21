@@ -39,10 +39,9 @@ import java.util.Map;
  */
 @Mixin(value = LevelRenderer.class, priority = 999)
 public class MixinLevelRenderer_EntityListSorting {
-	@Shadow
-	private ClientLevel level;
+	@Shadow(remap = false)	private ClientLevel level;
 
-	@WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Iterable;iterator()Ljava/util/Iterator;"))
+	@WrapOperation(method = "renderLevel", at = @At(value = "INVOKE", target = "Ljava/lang/Iterable;iterator()Ljava/util/Iterator;"), remap = false)
 	private Iterator<Entity> batchedentityrendering$sortEntityList(Iterable<Entity> instance, Operation<Iterator<Entity>> original) {
 		// Sort the entity list first in order to allow vanilla's entity batching code to work better.
 		this.level.getProfiler().push("sortEntityList");

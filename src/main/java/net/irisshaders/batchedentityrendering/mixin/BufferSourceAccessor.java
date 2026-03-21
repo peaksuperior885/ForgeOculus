@@ -10,6 +10,5 @@ import java.util.SequencedMap;
 
 @Mixin(MultiBufferSource.BufferSource.class)
 public interface BufferSourceAccessor {
-	@Accessor
-	SequencedMap<RenderType, ByteBufferBuilder> getFixedBuffers();
+	@Accessor(remap = false)	SequencedMap<RenderType, ByteBufferBuilder> getFixedBuffers();
 }

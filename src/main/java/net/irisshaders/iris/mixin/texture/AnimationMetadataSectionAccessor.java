@@ -7,17 +7,17 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(AnimationMetadataSection.class)
 public interface AnimationMetadataSectionAccessor {
-	@Accessor("frameWidth")
+	@Accessor(value = "frameWidth", remap = false)
 	int getFrameWidth();
 
 	@Mutable
-	@Accessor("frameWidth")
+	@Accessor(value = "frameWidth", remap = false)
 	void setFrameWidth(int frameWidth);
 
-	@Accessor("frameHeight")
+	@Accessor(value = "frameHeight", remap = false)
 	int getFrameHeight();
 
 	@Mutable
-	@Accessor("frameHeight")
+	@Accessor(value = "frameHeight", remap = false)
 	void setFrameHeight(int frameHeight);
 }

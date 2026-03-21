@@ -11,10 +11,10 @@ import java.util.Map;
 
 @Mixin(TextureAtlas.class)
 public interface TextureAtlasAccessor {
-	@Accessor("texturesByName")
+	@Accessor(value = "texturesByName", remap = false)
 	Map<ResourceLocation, TextureAtlasSprite> getTexturesByName();
 
-	@Accessor("mipLevel")
+	@Accessor(value = "mipLevel", remap = false)
 	int getMipLevel();
 
 	@Invoker("getWidth")

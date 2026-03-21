@@ -1,9 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
+  "refmap": "mixins.oculus.refmap.json",
   "package": "net.irisshaders.iris.mixin",
-  "plugin": "net.irisshaders.iris.mixin.OculusMixinPlugin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_21",
   "client": [
     "DimensionTypeAccessor",
     "GameRendererAccessor",
@@ -37,13 +37,11 @@
     "MixinLightTexture",
     "MixinMinecraft_PipelineManagement",
     "MixinModelViewBobbing",
-    "MixinOptions_Entrypoint",
     "MixinParticleEngine",
     "MixinProgram",
     "MixinProgramManager",
     "MixinProgramType",
     "MixinRenderSystem",
-    "MixinRenderTarget",
     "MixinScreenEffectRenderer",
     "MixinShaderInstance",
     "MixinSystemReport",
@@ -53,6 +51,9 @@
     "MixinVertexBuffer",
     "MixinWindow",
     "ProgramTypeAccessor",
+    "TextureStateAccessor",
+    "accessor.ProgramAccessor",
+    "accessor.ShaderInstanceAccessor",
     "entity_render_context.MixinBlockEntityRenderDispatcher",
     "entity_render_context.MixinCapeLayer",
     "entity_render_context.MixinElytraLayer",
@@ -64,6 +65,7 @@
     "entity_render_context.MixinRenderMekasuit",
     "fabulous.MixinDisableFabulousGraphics",
     "gui.MixinGui",
+    "MixinMainTarget",
     "gui.MixinVideoSettingsScreen",
     "rendertype.RenderStateShardAccessor",
     "rendertype.RenderTypeAccessor",
@@ -96,7 +98,7 @@
     "texture.pbr.MixinTextureAtlas"
   ],
   "injectors": {
-    "defaultRequire": 1,
+    "defaultRequire": 0,
     "maxShiftBy": 2
   }
 }

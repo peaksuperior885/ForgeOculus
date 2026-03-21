@@ -14,16 +14,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LightTexture.class)
 public class MixinLightTexture {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private Minecraft minecraft;
 
-	@Inject(method = "updateLightTexture", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getSkyDarken(F)F"))
+	@Inject(method = "updateLightTexture", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getSkyDarken(F)F"), remap = false)
 	private void resetDarknessValue(float $$0, CallbackInfo ci) {
 		CapturedRenderingState.INSTANCE.setDarknessLightFactor(0.0F);
 	}
 
-	@Inject(method = "calculateDarknessScale", at = @At("RETURN"))
+	@Inject(method = "calculateDarknessScale", at = @At("RETURN"), remap = false)
 	private void storeDarknessValue(LivingEntity $$0, float $$1, float $$2, CallbackInfoReturnable<Float> cir) {
 		CapturedRenderingState.INSTANCE.setDarknessLightFactor((float) (cir.getReturnValue() * this.minecraft.options.darknessEffectScale().get()));
 	}

@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * <p>
  * Credit goes to Nuclearfarts for the trick.
  */
-@Mixin(ChunkMeshAttribute.class)
+@Mixin(value = ChunkMeshAttribute.class, remap = false)
 public class MixinChunkMeshAttribute {
 	@SuppressWarnings("target")
 	@Shadow(remap = false)

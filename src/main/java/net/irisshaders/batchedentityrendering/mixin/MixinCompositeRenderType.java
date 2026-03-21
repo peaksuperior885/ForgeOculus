@@ -23,7 +23,7 @@ public abstract class MixinCompositeRenderType extends RenderType implements Ble
 		super(name, vertexFormat, drawMode, expectedBufferSize, hasCrumbling, translucent, startAction, endAction);
 	}
 
-	@Inject(method = INIT, at = @At("RETURN"))
+	@Inject(method = INIT, at = @At("RETURN"), remap = false)
 	private void batchedentityrendering$onCompositeInit(String string, VertexFormat vertexFormat, VertexFormat.Mode mode, int i, boolean bl, boolean bl2, CompositeState compositeState, CallbackInfo ci) {
 		RenderStateShard.TransparencyStateShard transparency = ((CompositeStateAccessor) (Object) compositeState).getTransparency();
 

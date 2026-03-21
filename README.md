@@ -1,53 +1,48 @@
 <p align="center">
-  <img src="banner.png">
+  <img src="banner.png" alt="NeOculus Banner">
 </p>
 
-# NeOculus
+# ForgeOculus
 [![](http://cf.way2muchnoise.eu/short_neoculus_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/neoculus)
 [![](http://cf.way2muchnoise.eu/versions/Available%20for_neoculus_full.svg)](https://www.curseforge.com/minecraft/mc-mods/neoculus/files)
 
-NeOculus is an Unofficial Fork of ["Oculus"](https://www.curseforge.com/minecraft/mc-mods/oculus)
+**ForgeOculus** is the modern, high-performance shader solution for the Forge 1.21.1 community. 
 
-Oculus is an Unofficial Fork of ["Iris"](https://www.curseforge.com/minecraft/mc-mods/irisshaders), made to work with Forge Mod Loader.
+This project is an unofficial fork of [Oculus](https://www.curseforge.com/minecraft/mc-mods/oculus) (which is itself a fork of [Iris](https://www.curseforge.com/minecraft/mc-mods/irisshaders)), specifically maintained to ensure Forge players don't have to rely on OptiFine for a premium visual experience.
 
-[//]: # (## Disclaimer)
+## ⚠️ Important: Dependencies
+To function correctly, ForgeOculus  **requires** the Beddium rendering engine. 
 
-[//]: # (Oculus is not and never will be compatible with Optifine!)
+* **Official Link:** [Beddium on CurseForge](https://www.curseforge.com/minecraft/mc-mods/beddium)
+* **Note:** You will have to wait for the developer (Ven) to republish the official jar for 1.21.1 Forge and also I shall Give Full credit to (Ven). 
+* **Temporary Alternative:** Until the official republish, please use this verified build: [Beddium 1.0.10 for 1.21.1 (MediaFire)](https://www.mediafire.com/file/3bqyko04tdxsjnt/beddium-1.0.10%252Bmc1.21.1.jar/file)
 
-## Dependencies
-Oculus requires [Embeddium](https://www.curseforge.com/minecraft/mc-mods/embeddium) made by FiniteReality!
+## ✨ Features
+* **Peak Performance:** Fully utilizes your GPU when paired with Beddium to provide high frame rates even with demanding packs.
+* **Broad Compatibility:** Works with a vast majority of modded environments and complex Forge modpacks.
+* **Plug & Play Shaders:** All existing ShadersMod / OptiFine shader packs (BSL, Complementary, etc.) work out of the box without modifications.
+* **Clean Codebase:** A refactored and organized codebase aimed at making maintenance and community contributions easier.
 
-## Features
-* Performance. Oculus should fully utilize your graphics card when paired with optimization mods like Rubidium.
+## 📦 Embedded Libraries & Enhancements
 
-* Mod compatibility. Oculus should make a best effort to be compatible with modded environments.
-
-* Backwards compatibility. All existing ShadersMod / OptiFine shader packs should just work on Oculus, without any modifications required.
-
-* A well-organized codebase. I'd like for working with Oculus code to be a pleasant experience overall.
-
-## Feature from Embedded Libraries
-
-### [Swaying Garden](https://github.com/joe-vettek/SwayingGarden/blob/1.21.1-neo/README.md)
-* Applying shader effects to modded plant blocks often requires modifying files in the resource pack, which can be cumbersome and tedious, especially when you want to switch shaders easily. This mod simplifies the process by easily enabling modded plant blocks to sway with shader effects, creating a dynamic and immersive visual experience in your world—whether it's flowers, saplings, or other plant-like blocks.
+### [Swaying Garden](https://github.com/joe-vettek/SwayingGarden)
+Automatically applies shader effects (swaying/waving) to modded plant blocks without needing to manually edit resource pack files. Supports flowers, saplings, and more for a truly immersive world.
 
 ### [Accelerated Rendering](https://github.com/Argon4W/AcceleratedRendering)
-* Using GPU to accelerate vertex transformation, resulting in several times faster fps when rendering a large number of entities/text/item entities
+*(Coming Soon / Integrated)* Uses GPU-accelerated vertex transformation to significantly boost FPS when rendering large numbers of entities, text, or dropped items.
 
-## Contributors
+## 👥 Contributors
+A huge thank you to the developers who made the foundations of this project possible.
+
 <a href="https://github.com/Yuqi154/NeOculus/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Yuqi154/NeOculus" />
 </a>
 
-## License
+## 📜 Licenses
+* **ForgeOculus / Oculus:** [LGPL-3.0 license](https://github.com/Asek3/Oculus/blob/1.16.5/LICENSE)
+* **Monocle:** [LGPL-3.0 license](https://github.com/ferriarnus/Monocle/blob/main/LICENSE.txt)
+* **Swaying Garden:** ARR (Authorized for use in ForgeOculus)
+* **Accelerated Rendering:** [MIT license](https://github.com/Argon4W/AcceleratedRendering/blob/main/LICENSE)
 
-Oculus [LGPL-3.0 license](https://github.com/Asek3/Oculus/blob/1.16.5/LICENSE)  
-Monocle [LGPL-3.0 license](https://github.com/ferriarnus/Monocle/blob/main/LICENSE.txt)  
-
-## Embedded Libraries
-[Swaying Garden](https://github.com/joe-vettek/SwayingGarden) ARR Authorized  
-Accelerated Rendering [MIT license](https://github.com/Argon4W/AcceleratedRendering/blob/main/LICENSE)
-
-[//]: # (## Consider supporting )
-
-[//]: # ([![Support me on Patreon]&#40;https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dasek3%26type%3Dpatrons&style=for-the-badge&#41;]&#40;https://patreon.com/asek3&#41;)
+---
+*ForgeOculus is not affiliated with or endorsed by OptiFine.*

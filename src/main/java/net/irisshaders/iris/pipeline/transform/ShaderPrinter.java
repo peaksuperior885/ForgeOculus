@@ -1,7 +1,7 @@
 package net.irisshaders.iris.pipeline.transform;
 
 import net.irisshaders.iris.Iris;
-import net.neoforged.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.IOException;

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mixin(SpriteContents.AnimatedTexture.class)
 public interface SpriteContentsAnimatedTextureAccessor {
-	@Accessor("frames")
+	@Accessor(value = "frames", remap = false)
 	List<SpriteContents.FrameInfo> getFrames();
 
 	@Invoker("uploadFrame")

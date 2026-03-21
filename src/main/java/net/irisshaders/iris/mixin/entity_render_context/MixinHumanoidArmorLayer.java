@@ -34,27 +34,34 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, M extends 
 		super(pRenderLayer0);
 	}
 
-	@Inject(method = "renderArmorPiece(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/HumanoidModel;copyPropertiesTo(Lnet/minecraft/client/model/HumanoidModel;)V"), require = 0)
-	private void changeId(PoseStack poseStack, MultiBufferSource bufferSource, LivingEntity livingEntity, EquipmentSlot slot, int packedLight, HumanoidModel p_model, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci, @Local ArmorItem lvArmorItem8) {
+	@Inject(method = "renderArmorPiece", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/HumanoidModel;copyPropertiesTo(Lnet/minecraft/client/model/HumanoidModel;)V"), require = 0, remap = false)
+	private void changeId(PoseStack poseStack, MultiBufferSource bufferSource, T livingEntity, EquipmentSlot slot, int packedLight, A model, CallbackInfo ci) {
 		if (WorldRenderingSettings.INSTANCE.getItemIds() == null) return;
 
-		ResourceLocation location = BuiltInRegistries.ITEM.getKey(lvArmorItem8);
-
-		CapturedRenderingState.INSTANCE.setCurrentRenderedItem(WorldRenderingSettings.INSTANCE.getItemIds().applyAsInt(new NamespacedId(location.getNamespace(), location.getPath())));
+		// In 1.21.1, you get the item from the slot directly from the entity
+		net.minecraft.world.item.ItemStack stack = livingEntity.getItemBySlot(slot);
+		if (stack.getItem() instanceof ArmorItem lvArmorItem8) {
+			ResourceLocation location = BuiltInRegistries.ITEM.getKey(lvArmorItem8);
+			CapturedRenderingState.INSTANCE.setCurrentRenderedItem(WorldRenderingSettings.INSTANCE.getItemIds().applyAsInt(new NamespacedId(location.getNamespace(), location.getPath())));
+		}
 	}
-	@Inject(method = "renderTrim(Lnet/minecraft/core/Holder;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/armortrim/ArmorTrim;Lnet/minecraft/client/model/Model;Z)V", at = @At(value = "HEAD"))
-	private void changeTrimTemp(Holder<ArmorMaterial> holder, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorTrim armorTrim, Model humanoidModel, boolean bl, CallbackInfo ci) {
+
+	@Inject(method = "renderTrim", at = @At(value = "HEAD"), remap = true)
+	private void changeTrimTemp(Holder<ArmorMaterial> holder, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorTrim armorTrim, HumanoidModel<?> humanoidModel, boolean bl, CallbackInfo ci) {
 		if (WorldRenderingSettings.INSTANCE.getItemIds() == null) return;
 
-		EntityState.interposeItemId(WorldRenderingSettings.INSTANCE.getItemIds().applyAsInt(new NamespacedId("minecraft", "trim_" + armorTrim.material().value().assetName())));
+		// 1.21.1: Trims now use a Holder for the material
+		String assetName = armorTrim.material().value().assetName();
+
+		EntityState.interposeItemId(WorldRenderingSettings.INSTANCE.getItemIds().applyAsInt(new NamespacedId("minecraft", "trim_" + assetName)));
 	}
 
-	@Inject(method = "renderTrim(Lnet/minecraft/core/Holder;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/armortrim/ArmorTrim;Lnet/minecraft/client/model/Model;Z)V", at = @At(value = "TAIL"))
-	private void changeTrimTemp2(Holder<ArmorMaterial> holder, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorTrim armorTrim, Model humanoidModel, boolean bl, CallbackInfo ci) {
+	@Inject(method = "renderTrim", at = @At(value = "TAIL"), remap = true)
+	private void changeTrimTemp2(Holder<ArmorMaterial> holder, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ArmorTrim armorTrim, HumanoidModel<?> humanoidModel, boolean bl, CallbackInfo ci) {
 		EntityState.restoreItemId();
 	}
 
-	@Inject(method = "renderArmorPiece", at = @At(value = "TAIL"))
+	@Inject(method = "renderArmorPiece", at = @At(value = "TAIL"), remap = false)
 	private void changeId2(CallbackInfo ci) {
 		CapturedRenderingState.INSTANCE.setCurrentRenderedItem(0);
 	}

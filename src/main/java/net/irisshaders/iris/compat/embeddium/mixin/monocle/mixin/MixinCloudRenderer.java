@@ -39,13 +39,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CloudRenderer.class)
 public abstract class MixinCloudRenderer {
-    @Shadow
-    private ShaderInstance shader;
-    @Shadow
-    @Final
+    @Shadow(remap = false)    private ShaderInstance shader;
+    @Shadow(remap = false)    @Final
     private FogRenderer.FogData fogData;
-    @Shadow
-    private boolean hasCloudGeometry;
+    @Shadow(remap = false)    private boolean hasCloudGeometry;
     @Unique
     private VertexBuffer vertexBufferWithNormals;
     @Unique
@@ -59,11 +56,9 @@ public abstract class MixinCloudRenderer {
         }
     }
 
-    @Shadow
-    protected abstract void rebuildGeometry(BufferBuilder bufferBuilder, int cloudDistance, int centerCellX, int centerCellZ);
+    @Shadow(remap = false)    protected abstract void rebuildGeometry(BufferBuilder bufferBuilder, int cloudDistance, int centerCellX, int centerCellZ);
 
-    @Shadow
-    protected abstract void applyFogModifiers(ClientLevel world, FogRenderer.FogData fogData, LocalPlayer player, int cloudDistance, float tickDelta);
+    @Shadow(remap = false)    protected abstract void applyFogModifiers(ClientLevel world, FogRenderer.FogData fogData, LocalPlayer player, int cloudDistance, float tickDelta);
 
     @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true, remap = false)
     private void buildIrisVertexBuffer(ClientLevel world, LocalPlayer player, PoseStack stack, Matrix4f modelViewMatrix, Matrix4f projectionMatrix, float ticks, float tickDelta, double cameraX, double cameraY, double cameraZ, CallbackInfo ci) {

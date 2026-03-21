@@ -26,7 +26,7 @@ public class MixinRenderFlame {
 
     @Redirect(method = {
             "render(Lmekanism/common/entity/EntityFlame;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"
-    }, at = @At(value = "FIELD", target = "Lmekanism/client/render/MekanismRenderType;FLAME:Ljava/util/function/Function;"))
+    }, at = @At(value = "FIELD", target = "Lmekanism/client/render/MekanismRenderType;FLAME:Ljava/util/function/Function;"), remap = false)
     private Function<ResourceLocation, RenderType> doNotSwitchShaders() {
         if (Iris.isPackInUseQuick()) {
             return LightningHandler.MEKANISM_FLAME;

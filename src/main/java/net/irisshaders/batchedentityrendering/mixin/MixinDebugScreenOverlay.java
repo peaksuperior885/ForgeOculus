@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Mixin(value = DebugScreenOverlay.class, priority = 1010)
 public abstract class MixinDebugScreenOverlay {
-	@Inject(method = "getGameInformation", at = @At("RETURN"))
+	@Inject(method = "getGameInformation", at = @At("RETURN"), remap = false)
 	private void batchedentityrendering$appendStats(CallbackInfoReturnable<List<String>> cir) {
 		List<String> messages = cir.getReturnValue();
 

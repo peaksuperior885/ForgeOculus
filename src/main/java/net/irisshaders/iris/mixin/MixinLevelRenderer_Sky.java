@@ -20,8 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 // This is a modified version of a mixin in Sodium, with a check for if a shader pack is active.
 @Mixin(LevelRenderer.class)
 public class MixinLevelRenderer_Sky {
-    @Shadow
-    @Final
+    @Shadow(remap = false)    @Final
     private Minecraft minecraft;
 
     /**
@@ -41,7 +40,7 @@ public class MixinLevelRenderer_Sky {
      * <p>When updating Sodium to new releases of the game, please check for new
      * ways the fog can be reduced in {@link FogRenderer#setupFog}.</p>
      */
-    @Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderSky", at = @At("HEAD"), cancellable = true, remap = false)
     private void preRenderSky(Matrix4f matrix4f, Matrix4f matrix4f2, float f, Camera camera, boolean bl, Runnable runnable, CallbackInfo ci) {
         if (Iris.getCurrentPack().isEmpty()) {
             Vec3 cameraPosition = camera.getPosition();

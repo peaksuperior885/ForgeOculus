@@ -21,6 +21,8 @@ import net.irisshaders.iris.gl.program.ProgramUniforms;
 import net.irisshaders.iris.gl.sampler.SamplerHolder;
 import net.irisshaders.iris.gl.texture.TextureType;
 import net.irisshaders.iris.gl.uniform.DynamicLocationalUniformHolder;
+import net.irisshaders.iris.mixin.accessor.ProgramAccessor;
+import net.irisshaders.iris.mixin.accessor.ShaderInstanceAccessor;
 import net.irisshaders.iris.mixinterface.ShaderInstanceInterface;
 import net.irisshaders.iris.pipeline.IrisRenderingPipeline;
 import net.irisshaders.iris.samplers.IrisSamplers;
@@ -110,8 +112,8 @@ public class ExtendedShader extends ShaderInstance implements ShaderInstanceInte
 	}
 
 	private void setupDebugNames(String name) {
-		GLDebug.nameObject(KHRDebug.GL_SHADER, this.getVertexProgram().getId(), name + "_vertex.vsh");
-		GLDebug.nameObject(KHRDebug.GL_SHADER, this.getFragmentProgram().getId(), name + "_fragment.fsh");
+		GLDebug.nameObject(KHRDebug.GL_SHADER, ((ProgramAccessor)this.getVertexProgram()).getId(), name + "_vertex.vsh");
+		GLDebug.nameObject(KHRDebug.GL_SHADER, ((ProgramAccessor)this.getFragmentProgram()).getId(), name + "_fragment.fsh");
 		GLDebug.nameObject(KHRDebug.GL_PROGRAM, this.getId(), name);
 	}
 
@@ -176,7 +178,8 @@ public class ExtendedShader extends ShaderInstance implements ShaderInstanceInte
 		uploadIfNotNull(modelViewInverse);
 		uploadIfNotNull(normalMatrix);
 
-		super.uniforms.forEach(this::uploadIfNotNull);
+		// Use the accessor to reach the private 'uniforms' list in ShaderInstance
+		((ShaderInstanceAccessor) this).getUniforms().forEach(this::uploadIfNotNull);
 
 		samplers.update();
 		uniforms.update();
@@ -272,7 +275,7 @@ public class ExtendedShader extends ShaderInstance implements ShaderInstanceInte
 								return null;
 							}
 						});
-				GLDebug.nameObject(KHRDebug.GL_SHADER, program.getId(), name + suffix);
+				GLDebug.nameObject(KHRDebug.GL_SHADER, ((ProgramAccessor) program).getId(), name + suffix);
 				programSetter.accept(program);
 			} catch (IOException e) {
 				Iris.logger.error("Failed to create shader program", e);

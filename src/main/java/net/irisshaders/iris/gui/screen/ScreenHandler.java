@@ -4,7 +4,7 @@ import net.irisshaders.iris.gui.debug.DebugLoadFailedGridScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.neoforged.fml.ModContainer;
+import net.minecraftforge.fml.ModContainer;
 
 public class ScreenHandler {
     // 需要这个类来避免Screen被提前加载，导致其他模组对Screen类的Mixin失效

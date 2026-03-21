@@ -13,14 +13,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LevelRenderer.class)
 public class MixinDisableFabulousGraphics {
-	@Inject(method = "onResourceManagerReload", at = @At("HEAD"))
+	@Inject(method = "onResourceManagerReload", at = @At("HEAD"), remap = false)
 	private void iris$disableFabulousGraphicsOnResourceReload(CallbackInfo ci) {
 		iris$disableFabulousGraphics();
 	}
 
 	// This method is called whenever the user tries to change the graphics mode.
 	// We can still revert / intercept the change at the head of the method.
-	@Inject(method = "allChanged", at = @At("HEAD"))
+	@Inject(method = "allChanged", at = @At("HEAD"), remap = false)
 	private void iris$disableFabulousGraphicsOnLevelRendererReload(CallbackInfo ci) {
 		iris$disableFabulousGraphics();
 	}

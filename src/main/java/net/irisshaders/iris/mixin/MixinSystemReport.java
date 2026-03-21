@@ -15,10 +15,9 @@ import java.util.function.Supplier;
  */
 @Mixin(SystemReport.class)
 public abstract class MixinSystemReport {
-	@Shadow
-	public abstract void setDetail(String string, Supplier<String> supplier);
+	@Shadow(remap = false)	public abstract void setDetail(String string, Supplier<String> supplier);
 
-	@Inject(at = @At("RETURN"), method = "<init>")
+	@Inject(at = @At("RETURN"), method = "<init>", remap = false)
 	private void fillSystemDetails(CallbackInfo ci) {
 		if (Iris.getCurrentPackName() == null) return; // this also gets called at startup for some reason
 

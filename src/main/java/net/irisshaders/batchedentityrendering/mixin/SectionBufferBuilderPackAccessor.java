@@ -11,6 +11,5 @@ import java.util.Map;
 
 @Mixin(SectionBufferBuilderPack.class)
 public interface SectionBufferBuilderPackAccessor {
-	@Accessor
-	Map<RenderType, ByteBufferBuilder> getBuffers();
+	@Accessor(remap = false)	Map<RenderType, ByteBufferBuilder> getBuffers();
 }

@@ -17,17 +17,13 @@ import java.nio.ByteBuffer;
 @Mixin(value = BufferBuilder.class, priority = 1010)
 public class MixinBufferBuilder_SegmentRendering implements BufferBuilderExt {
 	@Final
-	@Shadow
-	private ByteBufferBuilder buffer;
+	@Shadow(remap = false)	private ByteBufferBuilder buffer;
 
 	@Final
-	@Shadow
-	private VertexFormat format;
+	@Shadow(remap = false)	private VertexFormat format;
 
-	@Shadow
-	private int vertices;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	private int vertices;
+	@Shadow(remap = false)	@Final
 	private int vertexSize;
 	@Unique
 	private boolean dupeNextVertex;
@@ -53,7 +49,7 @@ public class MixinBufferBuilder_SegmentRendering implements BufferBuilderExt {
 		++this.vertices;
 	}
 
-	@Inject(method = "endLastVertex", at = @At("RETURN"))
+	@Inject(method = "endLastVertex", at = @At("RETURN"), remap = false)
 	private void batchedentityrendering$onNext(CallbackInfo ci) {
 		if (dupeNextVertexAfter) {
 			dupeNextVertexAfter = false;

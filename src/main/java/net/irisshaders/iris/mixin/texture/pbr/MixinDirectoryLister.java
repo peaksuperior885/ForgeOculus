@@ -13,20 +13,17 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(DirectoryLister.class)
 public class MixinDirectoryLister {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private String sourcePath;
 
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private String idPrefix;
 
 	/**
 	 * @author Asek3
 	 * @reason ModifyArgs on forge
 	 */
-	@Overwrite
-	public void run(ResourceManager resourceManager, SpriteSource.Output output) {
+	@Overwrite(remap = false)	public void run(ResourceManager resourceManager, SpriteSource.Output output) {
 		FileToIdConverter fileToIdConverter = new FileToIdConverter("textures/" + sourcePath, ".png");
 		fileToIdConverter.listMatchingResources(resourceManager).forEach((location, resource) -> {
 			String basePath = PBRType.removeSuffix(location.getPath());

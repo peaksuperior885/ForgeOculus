@@ -299,8 +299,7 @@ public final class GLDebug {
 	}
 
 	public static void reloadDebugState() {
-		if (Iris.getIrisConfig().areDebugOptionsEnabled() && (GL.getCapabilities().GL_KHR_debug || GL.getCapabilities().OpenGL43)) {
-			debugState = new KHRDebugState();
+		if (Iris.getIrisConfig() != null && Iris.getIrisConfig().areDebugOptionsEnabled()) {			debugState = new KHRDebugState();
 		} else {
 			debugState = new UnsupportedDebugState();
 		}

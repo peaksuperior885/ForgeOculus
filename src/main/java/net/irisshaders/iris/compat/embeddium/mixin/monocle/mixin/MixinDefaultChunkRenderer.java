@@ -20,10 +20,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(DefaultChunkRenderer.class)
+@Mixin(value = DefaultChunkRenderer.class, remap = false)
 public abstract class MixinDefaultChunkRenderer extends ShaderChunkRenderer {
-	@Shadow
-	private boolean isIndexedPass;
+	@Shadow(remap = false)	private boolean isIndexedPass;
 
 	public MixinDefaultChunkRenderer(RenderDevice device, ChunkVertexType vertexType) {
 		super(device, vertexType);
@@ -46,7 +45,7 @@ public abstract class MixinDefaultChunkRenderer extends ShaderChunkRenderer {
 //		original.call(instance, commandList, tessellation);
 //	}
 
-	@Inject(method = "getBindingsForType", at = @At("TAIL"), cancellable = true)
+	@Inject(method = "getBindingsForType", at = @At("TAIL"), cancellable = true, remap = false)
 	private void addType(CallbackInfoReturnable<GlVertexAttributeBinding[]> cir) {
 		if (this.vertexType == IrisModelVertexFormats.MODEL_VERTEX_XHFP) {
 			GlVertexFormat<ChunkMeshAttribute> vertexFormat = XHFPModelVertexType.VERTEX_FORMAT;

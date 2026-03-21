@@ -18,7 +18,7 @@ import net.irisshaders.iris.shaderpack.materialmap.TagEntry;
 import net.irisshaders.iris.shaderpack.option.OrderBackedProperties;
 import net.irisshaders.iris.shaderpack.option.ShaderPackOptions;
 import net.irisshaders.iris.shaderpack.preprocessor.PropertiesPreprocessor;
-import net.neoforged.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -117,8 +117,7 @@ public class IdMap {
 			return Optional.empty();
 		}
 
-		if (Iris.getIrisConfig().areDebugOptionsEnabled()) {
-			ShaderPrinter.deleteIfClearing();
+		if (Iris.getIrisConfig() != null && Iris.getIrisConfig().areDebugOptionsEnabled()) {			ShaderPrinter.deleteIfClearing();
 			try (OutputStream os = Files.newOutputStream(FMLPaths.GAMEDIR.get().resolve("patched_shaders").resolve(name))) {
 				properties.store(new OutputStreamWriter(os, StandardCharsets.UTF_8), "Patched version of properties");
 			} catch (IOException e) {

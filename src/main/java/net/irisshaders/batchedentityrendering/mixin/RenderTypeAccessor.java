@@ -6,6 +6,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(RenderType.class)
 public interface RenderTypeAccessor {
-	@Accessor("sortOnUpload")
+	@Accessor(value = "sortOnUpload", remap = false)
 	boolean shouldSortOnUpload();
 }

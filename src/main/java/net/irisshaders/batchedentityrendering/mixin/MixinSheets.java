@@ -13,11 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Sheets.class)
 public class MixinSheets {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private static RenderType ARMOR_TRIMS_SHEET_TYPE;
 
-	@Inject(method = "<clinit>", at = @At("TAIL"))
+	@Inject(method = "<clinit>", at = @At("TAIL"), remap = false)
 	private static void setSheet(CallbackInfo ci) {
 		((BlendingStateHolder) ARMOR_TRIMS_SHEET_TYPE).setTransparencyType(TransparencyType.OPAQUE_DECAL);
 		((BlendingStateHolder) RenderType.textBackground()).setTransparencyType(TransparencyType.OPAQUE);

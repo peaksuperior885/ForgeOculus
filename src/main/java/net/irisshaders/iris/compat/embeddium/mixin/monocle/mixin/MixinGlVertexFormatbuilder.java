@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(	GlVertexFormat.Builder.class)
+@Mixin(	value = GlVertexFormat.Builder.class, remap = false)
 public class MixinGlVertexFormatbuilder {
 
 	GlVertexAttribute dummy = new GlVertexAttribute(GlVertexAttributeFormat.UNSIGNED_BYTE, 0,false, 0, 0, false);
 
-	@ModifyVariable(method = "build", at = @At(value = "LOAD", target = "Ljava/util/EnumMap;get(Ljava/lang/Object;)Ljava/lang/Object;"))
+	@ModifyVariable(method = "build", at = @At(value = "LOAD", target = "Ljava/util/EnumMap;get(Ljava/lang/Object;)Ljava/lang/Object;"), remap = false)
 	private GlVertexAttribute putDummy(GlVertexAttribute value) {
 		if (value == null) {
 			return dummy;
@@ -23,7 +23,7 @@ public class MixinGlVertexFormatbuilder {
 		return value;
 	}
 
-	@WrapOperation(method = "build", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(II)I"))
+	@WrapOperation(method = "build", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(II)I"), remap = false)
 	private int putDummy(int a, int b, Operation<Integer> original, @Local GlVertexAttribute attribute) {
 		if (attribute == dummy) {
 			return a;

@@ -8,8 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(value = Biome.class, priority = 990)
 public class MixinBiome implements ExtendedBiome {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private Biome.ClimateSettings climateSettings;
 	private int biomeCategory = -1;
 

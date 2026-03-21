@@ -14,7 +14,7 @@ import static net.irisshaders.iris.gl.uniform.UniformUpdateFrequency.PER_FRAME;
  * @see <a href="https://github.com/IrisShaders/ShaderDoc/blob/master/uniforms.md#camera">Uniforms: Camera</a>
  */
 public class CameraUniforms {
-	private static final Minecraft client = Minecraft.getInstance();
+	public static final Minecraft client = Minecraft.getInstance();
 
 	private CameraUniforms() {
 	}

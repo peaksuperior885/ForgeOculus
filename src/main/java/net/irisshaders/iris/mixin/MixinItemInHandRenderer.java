@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemInHandRenderer.class)
 public class MixinItemInHandRenderer {
-	@Inject(method = "renderArmWithItem", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "renderArmWithItem", at = @At("HEAD"), cancellable = true, remap = false)
 	private void iris$skipTranslucentHands(AbstractClientPlayer abstractClientPlayer, float f, float g, InteractionHand interactionHand, float h, ItemStack itemStack, float i, PoseStack poseStack, MultiBufferSource multiBufferSource, int j, CallbackInfo ci) {
 		if (IrisApi.getInstance().isShaderPackInUse()) {
 			if (HandRenderer.INSTANCE.isRenderingSolid() && HandRenderer.INSTANCE.isHandTranslucent(interactionHand)) {

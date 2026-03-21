@@ -12,8 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(LevelRenderer.class)
 public class MixinLevelRenderer implements CullingDataCache {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	@Mutable
 	private ObjectArrayList<SectionRenderDispatcher.RenderSection> visibleSections;
 
@@ -21,11 +20,9 @@ public class MixinLevelRenderer implements CullingDataCache {
 	private ObjectArrayList<SectionRenderDispatcher.RenderSection> savedRenderChunks = new ObjectArrayList<>(69696);
 
 
-	@Shadow
-	private double prevCamRotX;
+	@Shadow(remap = false)	private double prevCamRotX;
 
-	@Shadow
-	private double prevCamRotY;
+	@Shadow(remap = false)	private double prevCamRotY;
 
 	@Unique
 	private double savedLastCameraX;

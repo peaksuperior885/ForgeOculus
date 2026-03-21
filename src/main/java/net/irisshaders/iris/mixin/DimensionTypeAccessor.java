@@ -8,10 +8,8 @@ import java.util.OptionalLong;
 
 @Mixin(DimensionType.class)
 public interface DimensionTypeAccessor {
-	@Accessor
-	OptionalLong getFixedTime();
+	@Accessor(remap = false)	OptionalLong getFixedTime();
 
-	@Accessor
-	float getAmbientLight();
+	@Accessor(remap = false)	float getAmbientLight();
 
 }

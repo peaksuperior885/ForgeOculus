@@ -19,7 +19,7 @@ public class MixinTitleScreen extends Screen {
 		super(arg);
 	}
 
-	@Inject(method = "init", at = @At("RETURN"))
+	@Inject(method = "init", at = @At("RETURN"), remap = false)
 	public void iris$firstInit(CallbackInfo ci) {
 		if (!iris$hasFirstInit) {
 			Iris.onLoadingComplete();

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ChainedJsonException.class)
 public class MixinChainedJsonException {
-	@Inject(method = "forException", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "forException", at = @At("HEAD"), cancellable = true, remap = false)
 	private static void iris$changeShaderParseException(Exception exception, CallbackInfoReturnable<ChainedJsonException> cir) {
 		if (exception instanceof ShaderCompileException e) {
 			cir.setReturnValue(new FakeChainedJsonException(e));

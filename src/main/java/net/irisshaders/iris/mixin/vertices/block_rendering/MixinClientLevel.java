@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
  */
 @Mixin(ClientLevel.class)
 public class MixinClientLevel {
-	@ModifyVariable(method = "getShade(Lnet/minecraft/core/Direction;Z)F", at = @At("HEAD"), argsOnly = true)
+	@ModifyVariable(method = "getShade(Lnet/minecraft/core/Direction;Z)F", at = @At("HEAD"), argsOnly = true, remap = false)
 	private boolean iris$maybeDisableDirectionalShading(boolean shaded) {
 		if (WorldRenderingSettings.INSTANCE.shouldDisableDirectionalShading()) {
 			return false;

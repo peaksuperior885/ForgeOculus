@@ -3,7 +3,6 @@ package net.irisshaders.iris.pipeline;
 import com.mojang.blaze3d.platform.GlStateManager;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMaps;
-import net.irisshaders.iris.compat.dh.DHCompat;
 import net.irisshaders.iris.compat.embeddium.impl.oculus.EmbeddiumPrograms;
 import net.irisshaders.iris.features.FeatureFlags;
 import net.irisshaders.iris.gl.texture.TextureType;
@@ -221,11 +220,6 @@ public class VanillaRenderingPipeline implements WorldRenderingPipeline {
 	public float getSunPathRotation() {
 		// No sun tilt
 		return 0;
-	}
-
-	@Override
-	public DHCompat getDHCompat() {
-		return null;
 	}
 
 	@Override

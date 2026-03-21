@@ -48,8 +48,7 @@ public abstract class MixinShaderInstance implements ShaderInstanceInterface {
         }
     }
 
-    @Shadow
-    public abstract int getId();
+    @Shadow(remap = false)    public abstract int getId();
 
     @Redirect(method = "updateLocations",
             at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V", remap = false))
@@ -61,7 +60,7 @@ public abstract class MixinShaderInstance implements ShaderInstanceInterface {
         logger.warn(message, arg1, arg2);
     }
 
-    @Redirect(method = "<init>(Lnet/minecraft/server/packs/resources/ResourceProvider;Lnet/minecraft/resources/ResourceLocation;Lcom/mojang/blaze3d/vertex/VertexFormat;)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/shaders/Uniform;glBindAttribLocation(IILjava/lang/CharSequence;)V"))
+    @Redirect(method = "<init>(Lnet/minecraft/server/packs/resources/ResourceProvider;Lnet/minecraft/resources/ResourceLocation;Lcom/mojang/blaze3d/vertex/VertexFormat;)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/shaders/Uniform;glBindAttribLocation(IILjava/lang/CharSequence;)V"), remap = false)
     public void iris$redirectBindAttributeLocation(int i, int j, CharSequence charSequence) {
         if (((Object) this) instanceof ExtendedShader && ATTRIBUTE_LIST.contains(charSequence)) {
             Uniform.glBindAttribLocation(i, j, "iris_" + charSequence);
@@ -70,7 +69,7 @@ public abstract class MixinShaderInstance implements ShaderInstanceInterface {
         }
     }
 
-    @Inject(method = "apply", at = @At("TAIL"))
+    @Inject(method = "apply", at = @At("TAIL"), remap = false)
     private void iris$lockDepthColorState(CallbackInfo ci) {
         if (((Object) this) instanceof ExtendedShader || ((Object) this) instanceof FallbackShader || !shouldOverrideShaders()) {
             return;
@@ -79,7 +78,7 @@ public abstract class MixinShaderInstance implements ShaderInstanceInterface {
         DepthColorStorage.disableDepthColor();
     }
 
-    @Inject(method = "clear", at = @At("HEAD"))
+    @Inject(method = "clear", at = @At("HEAD"), remap = false)
     private void iris$unlockDepthColorState(CallbackInfo ci) {
         if (((Object) this) instanceof ExtendedShader || ((Object) this) instanceof FallbackShader || !shouldOverrideShaders()) {
             return;
@@ -88,7 +87,7 @@ public abstract class MixinShaderInstance implements ShaderInstanceInterface {
         DepthColorStorage.unlockDepthColor();
     }
 
-    @Redirect(method = "<init>(Lnet/minecraft/server/packs/resources/ResourceProvider;Lnet/minecraft/resources/ResourceLocation;Lcom/mojang/blaze3d/vertex/VertexFormat;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/GsonHelper;parse(Ljava/io/Reader;)Lcom/google/gson/JsonObject;"))
+    @Redirect(method = "<init>(Lnet/minecraft/server/packs/resources/ResourceProvider;Lnet/minecraft/resources/ResourceLocation;Lcom/mojang/blaze3d/vertex/VertexFormat;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/GsonHelper;parse(Ljava/io/Reader;)Lcom/google/gson/JsonObject;"), remap = false)
     public JsonObject iris$setupGeometryShader(Reader reader, ResourceProvider resourceProvider, ResourceLocation name, VertexFormat vertexFormat) {
         this.iris$createExtraShaders(resourceProvider, name);
         return GsonHelper.parse(reader);

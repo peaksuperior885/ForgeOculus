@@ -2,6 +2,7 @@ package net.irisshaders.iris.mixin.bettermipmaps;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.irisshaders.iris.helpers.ColorSRGB;
+import net.irisshaders.iris.mixin.accessor.NativeImageAccessor;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
@@ -29,8 +30,7 @@ public class MixinTextureAtlasSprite {
 	}
 
 	@Mutable
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private NativeImage originalImage;
 
 	/**
@@ -105,7 +105,7 @@ public class MixinTextureAtlasSprite {
 				"Tried to get pointer to RGBA pixel data on NativeImage of wrong format; have %s", nativeImage.format()));
 		}
 
-		return nativeImage.pixels;
+		return ((NativeImageAccessor) (Object) nativeImage).getPixels();
 	}
 
 	// While Fabric allows us to @Inject into the constructor here, that's just a specific detail of FabricMC's mixin
@@ -116,7 +116,7 @@ public class MixinTextureAtlasSprite {
 	// support Forge, since this works well on Fabric too, it's fine to ensure that the diff between Fabric and Forge
 	// can remain minimal. Being less dependent on specific details of Fabric is good, since it means we can be more
 	// cross-platform.
-	@Redirect(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/texture/SpriteContents;originalImage:Lcom/mojang/blaze3d/platform/NativeImage;", opcode = Opcodes.PUTFIELD))
+	@Redirect(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/texture/SpriteContents;originalImage:Lcom/mojang/blaze3d/platform/NativeImage;", opcode = Opcodes.PUTFIELD), remap = false)
 	private void iris$beforeGenerateMipLevels(SpriteContents instance, NativeImage nativeImage, ResourceLocation resourceLocation) {
 		// We're injecting after the "info" field has been set, so this is safe even though we're in a constructor.
 		if (resourceLocation.getPath().contains("leaves")) {

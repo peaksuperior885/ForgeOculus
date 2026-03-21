@@ -15,13 +15,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TextureAtlas.class)
 public abstract class MixinTextureAtlas extends AbstractTexture implements TextureAtlasExtension {
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private ResourceLocation location;
 	@Unique
 	private PBRAtlasHolder pbrHolder;
 
-	@Inject(method = "cycleAnimationFrames()V", at = @At("TAIL"))
+	@Inject(method = "cycleAnimationFrames()V", at = @At("TAIL"), remap = false)
 	private void iris$onTailCycleAnimationFrames(CallbackInfo ci) {
 		if (pbrHolder != null) {
 			pbrHolder.cycleAnimationFrames();

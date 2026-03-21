@@ -6,6 +6,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(GlStateManager.BooleanState.class)
 public interface BooleanStateAccessor {
-	@Accessor("enabled")
+	@Accessor(value = "enabled", remap = false)
 	boolean isEnabled();
 }

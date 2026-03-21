@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.irisshaders.iris.mixin.GlStateManagerAccessor;
+import net.irisshaders.iris.mixin.TextureStateAccessor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL20C;
 
@@ -29,8 +30,7 @@ public class TextureInfoCache {
 	public void onTexImage2D(int target, int level, int internalformat, int width, int height, int border,
 							 int format, int type, @Nullable IntBuffer pixels) {
 		if (level == 0) {
-			int id = GlStateManagerAccessor.getTEXTURES()[GlStateManagerAccessor.getActiveTexture()].binding;
-			TextureInfo info = getInfo(id);
+			int id = ((TextureStateAccessor) GlStateManagerAccessor.getTEXTURES()[GlStateManagerAccessor.getActiveTexture()]).getBinding();		TextureInfo info = getInfo(id);
 			info.internalFormat = internalformat;
 			info.width = width;
 			info.height = height;

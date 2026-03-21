@@ -4,7 +4,7 @@ import org.embeddedt.embeddium.impl.render.chunk.vertex.format.ChunkMeshAttribut
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(ChunkMeshAttribute.class)
+@Mixin(value = ChunkMeshAttribute.class, remap = false)
 public interface ChunkMeshAttributeAccessor {
 	@Invoker(value = "<init>")
 	static ChunkMeshAttribute createChunkMeshAttribute(String name, int ordinal) {

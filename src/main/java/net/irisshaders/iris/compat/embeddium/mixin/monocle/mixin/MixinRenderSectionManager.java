@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(RenderSectionManager.class)
+@Mixin(value = RenderSectionManager.class, remap = false)
 public class MixinRenderSectionManager {
 	@ModifyArg(method = "<init>", remap = false,
 		at = @At(value = "INVOKE",
@@ -22,7 +22,7 @@ public class MixinRenderSectionManager {
 
 	@ModifyArg(method = "<init>",
 		at = @At(value = "INVOKE",
-			target = "Lorg/embeddedt/embeddium/impl/render/chunk/compile/executor/ChunkBuilder;<init>(Lnet/minecraft/client/multiplayer/ClientLevel;Lorg/embeddedt/embeddium/impl/render/chunk/vertex/format/ChunkVertexType;)V"))
+			target = "Lorg/embeddedt/embeddium/impl/render/chunk/compile/executor/ChunkBuilder;<init>(Lnet/minecraft/client/multiplayer/ClientLevel;Lorg/embeddedt/embeddium/impl/render/chunk/vertex/format/ChunkVertexType;)V"), remap = false)
 	private ChunkVertexType iris$useExtendedVertexFormat$2(ChunkVertexType vertexType) {
 		return IrisApi.getInstance().isShaderPackInUse() ? (ChunkVertexType) WorldRenderingSettings.INSTANCE.getVertexFormat() : vertexType;
 	}

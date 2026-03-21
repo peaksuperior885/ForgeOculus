@@ -7,8 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ByteBufferBuilder.class)
 public class MixinByteBufferBuilder implements MojangBufferAccessor {
-    @Shadow
-    long pointer;
+    @Shadow(remap = false)    long pointer;
 
     @Override
     public long getPointer() {

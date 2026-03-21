@@ -7,18 +7,18 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(SpriteContents.Ticker.class)
 public interface SpriteContentsTickerAccessor {
-	@Accessor("frame")
+	@Accessor(value = "frame", remap = false)
 	int getFrame();
 
-	@Accessor("frame")
+	@Accessor(value = "frame", remap = false)
 	void setFrame(int frame);
 
-	@Accessor("subFrame")
+	@Accessor(value = "subFrame", remap = false)
 	int getSubFrame();
 
-	@Accessor("subFrame")
+	@Accessor(value = "subFrame", remap = false)
 	void setSubFrame(int subFrame);
 
-	@Accessor("animationInfo")
+	@Accessor(value = "animationInfo", remap = false)
 	AnimatedTexture getAnimationInfo();
 }

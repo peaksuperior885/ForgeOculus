@@ -36,26 +36,19 @@ public abstract class MixinBufferBuilder  implements VertexConsumer,BlockSensiti
 	private final Vector3f normal = new Vector3f();
 	@Unique
 	private final long[] vertexOffsets = new long[4];
-	@Shadow
-	private int elementsToFill;
+	@Shadow(remap = false)	private int elementsToFill;
 	@Unique
 	private boolean skipEndVertexOnce;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private VertexFormat.Mode mode;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private VertexFormat format;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private int[] offsetsByElement;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private boolean fastFormat;
-	@Shadow
-	private long vertexPointer;
-	@Shadow
-	private int vertices;
+	@Shadow(remap = false)	private long vertexPointer;
+	@Shadow(remap = false)	private int vertices;
 	@Unique
 	private boolean extending;
 	@Unique
@@ -72,17 +65,14 @@ public abstract class MixinBufferBuilder  implements VertexConsumer,BlockSensiti
 	private int currentLocalPosY;
 	@Unique
 	private int currentLocalPosZ;
-	@Shadow
-	@Final
+	@Shadow(remap = false)	@Final
 	private ByteBufferBuilder buffer;
 
-	@Shadow
-	public abstract VertexConsumer setNormal(float f, float g, float h);
+	@Shadow(remap = false)	public abstract VertexConsumer setNormal(float f, float g, float h);
 
-	@Shadow
-	protected abstract long beginElement(VertexFormatElement vertexFormatElement);
+	@Shadow(remap = false)	protected abstract long beginElement(VertexFormatElement vertexFormatElement);
 
-	@ModifyVariable(method = "<init>", at = @At(value = "FIELD", target = "Lcom/mojang/blaze3d/vertex/VertexFormatElement;POSITION:Lcom/mojang/blaze3d/vertex/VertexFormatElement;", ordinal = 0), argsOnly = true)
+	@ModifyVariable(method = "<init>", at = @At(value = "FIELD", target = "Lcom/mojang/blaze3d/vertex/VertexFormatElement;POSITION:Lcom/mojang/blaze3d/vertex/VertexFormatElement;", ordinal = 0), argsOnly = true, remap = false)
 	private VertexFormat iris$extendFormat(VertexFormat format) {
 		boolean iris$isTerrain = false;
 		injectNormalAndUV1 = false;
@@ -111,12 +101,12 @@ public abstract class MixinBufferBuilder  implements VertexConsumer,BlockSensiti
 		return format;
 	}
 
-	@Redirect(method = "addVertex(FFFIFFIIFFF)V", at = @At(value = "FIELD", target = "Lcom/mojang/blaze3d/vertex/BufferBuilder;fastFormat:Z"))
+	@Redirect(method = "addVertex(FFFIFFIIFFF)V", at = @At(value = "FIELD", target = "Lcom/mojang/blaze3d/vertex/BufferBuilder;fastFormat:Z"), remap = false)
 	private boolean fastFormat(BufferBuilder instance) {
 		return this.fastFormat && !extending;
 	}
 
-	@Inject(method = "addVertex(FFF)Lcom/mojang/blaze3d/vertex/VertexConsumer;", at = @At("RETURN"))
+	@Inject(method = "addVertex(FFF)Lcom/mojang/blaze3d/vertex/VertexConsumer;", at = @At("RETURN"), remap = false)
 	private void injectMidBlock(float x, float y, float z, CallbackInfoReturnable<VertexConsumer> cir) {
 		if ((this.elementsToFill & IrisVertexFormats.MID_BLOCK_ELEMENT.mask()) != 0) {
 			long midBlockOffset = this.beginElement(IrisVertexFormats.MID_BLOCK_ELEMENT);
@@ -145,7 +135,7 @@ public abstract class MixinBufferBuilder  implements VertexConsumer,BlockSensiti
 		skipEndVertexOnce = true;
 	}
 
-	@Inject(method = "endLastVertex", at = @At("HEAD"))
+	@Inject(method = "endLastVertex", at = @At("HEAD"), remap = false)
 	private void iris$beforeNext(CallbackInfo ci) {
 		if (this.vertices == 0 || !extending) {
 			return;

@@ -1,10 +1,9 @@
 package net.irisshaders.iris.mixin;
 
 import net.irisshaders.iris.Iris;
-import net.irisshaders.iris.compat.acceleratedrendering.gui.ARModInfo;
 import net.irisshaders.iris.gui.option.IrisVideoSettings;
 import net.minecraft.client.gui.components.DebugScreenOverlay;
-import net.neoforged.fml.loading.LoadingModList;
+import net.minecraftforge.fml.loading.LoadingModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -62,14 +61,12 @@ public abstract class MixinDebugScreenOverlay {
 		return ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage().getUsed();
 	}
 
-	@Inject(method = "getSystemInformation", at = @At("RETURN"))
+	@Inject(method = "getSystemInformation", at = @At("RETURN"), remap = false)
 	private void iris$appendShaderPackText(CallbackInfoReturnable<List<String>> cir) {
 		List<String> messages = cir.getReturnValue();
 
 		messages.add("");
 		messages.add("[" + Iris.MODNAME + "] Version: " + Iris.getFormattedVersion());
-		if(LoadingModList.get().getModFileById("acceleratedrendering") != null)
-			messages.add("[" + ARModInfo.getArModName() + "] Version: " + ARModInfo.getFormattedArModVersion());
 		messages.add("");
 
 		if (Iris.getIrisConfig().areShadersEnabled()) {
@@ -89,7 +86,7 @@ public abstract class MixinDebugScreenOverlay {
 		//}
 	}
 
-	@Inject(method = "getGameInformation", at = @At("RETURN"))
+	@Inject(method = "getGameInformation", at = @At("RETURN"), remap = false)
 	private void iris$appendShadowDebugText(CallbackInfoReturnable<List<String>> cir) {
 		List<String> messages = cir.getReturnValue();
 

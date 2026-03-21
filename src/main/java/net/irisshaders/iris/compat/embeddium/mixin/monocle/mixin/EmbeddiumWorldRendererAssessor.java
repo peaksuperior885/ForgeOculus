@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 import java.util.SortedSet;
 
-@Mixin(EmbeddiumWorldRenderer.class)
+@Mixin(value = EmbeddiumWorldRenderer.class, remap = false)
 public interface EmbeddiumWorldRendererAssessor {
 
     @Invoker("renderBlockEntities")
