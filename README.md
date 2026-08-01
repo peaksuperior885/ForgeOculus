@@ -5,6 +5,8 @@
 # ForgeOculus
 [![](http://cf.way2muchnoise.eu/short_forgeoculus_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/forgeoculus)
 [![](http://cf.way2muchnoise.eu/versions/Available%20for_forgeoculus_full.svg)](https://www.curseforge.com/minecraft/mc-mods/forgeoculus/files)
+[![](https://img.shields.io/modrinth/dt/7Ktv0l76)](https://modrinth.com/mod/forgeoculus)
+[![](https://img.shields.io/modrinth/v/7Ktv0l76)](https://modrinth.com/mod/forgeoculus/versions)
 
 **ForgeOculus** is the modern, high-performance shader solution for the Forge 1.21.1 community. 
 

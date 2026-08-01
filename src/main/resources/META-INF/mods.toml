@@ -12,7 +12,7 @@ displayName="ForgeOculus"
 provides=["iris"]
 logoFile="forgeoculus-logo.png"
 
-authors="NanoLive, dima_dencep, coderbot, IMS212, Justsnoopy30, FoundationGames, Yuqi154, Peak885"
+authors="NanoLive, dima_dencep, coderbot, IMS212, Justsnoopy30, FoundationGames, Yuqi154, Peak885, Basdxz"
 description='''
 Unofficial Fork of "Oculus", made to work with neoforge 1.21+
 Unofficial Fork of "Iris", made to work with FML
