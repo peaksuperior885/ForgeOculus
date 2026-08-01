@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="banner.png" alt="NeOculus Banner">
+  <img src="banner.png" alt="ForgeOculus Banner">
 </p>
 
 # ForgeOculus
-[![](http://cf.way2muchnoise.eu/short_neoculus_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/neoculus)
-[![](http://cf.way2muchnoise.eu/versions/Available%20for_neoculus_full.svg)](https://www.curseforge.com/minecraft/mc-mods/neoculus/files)
+[![](http://cf.way2muchnoise.eu/short_forgeoculus_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/forgeoculus)
+[![](http://cf.way2muchnoise.eu/versions/Available%20for_forgeoculus_full.svg)](https://www.curseforge.com/minecraft/mc-mods/forgeoculus/files)
 
 **ForgeOculus** is the modern, high-performance shader solution for the Forge 1.21.1 community. 
 
