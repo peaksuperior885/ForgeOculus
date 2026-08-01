@@ -13,9 +13,9 @@ This project is an unofficial fork of [Oculus](https://www.curseforge.com/minecr
 ## ⚠️ Important: Dependencies
 To function correctly, ForgeOculus  **requires** the Beddium rendering engine. 
 
-* **Official Link:** [Beddium on CurseForge](https://www.curseforge.com/minecraft/mc-mods/beddium)
+* **Official Link:** [Beddium on CurseForge](https://curseforge.com)
 * **Note:** You will have to wait for the developer (Ven) to republish the official jar for 1.21.1 Forge and also I shall Give Full credit to (Ven). 
-* **Temporary Alternative:** Until the official republish, please use this verified build: [Beddium 1.0.10 for 1.21.1 (Github)]([https://www.mediafire.com/file/3bqyko04tdxsjnt/beddium-1.0.10%252Bmc1.21.1.jar/file](https://github.com/peaksuperior885/Thorbedium/releases))
+* **Temporary Alternative:** Until the official republish, please use this verified build: [Beddium 1.0.11 for 1.21.1 (GitHub)](https://github.com/peaksuperior885/Thorbedium/releases)
 
 ## ✨ Features
 * **Peak Performance:** Fully utilizes your GPU when paired with Beddium to provide high frame rates even with demanding packs.
