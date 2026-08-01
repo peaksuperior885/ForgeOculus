@@ -120,6 +120,7 @@ tasks.shadowJar {
     exclude 'kotlinx/**'
     exclude 'META-INF/kotlin*'
     exclude 'META-INF/versions/**'
+    exclude 'javax/**'
     exclude 'org/apache/**'
     exclude 'com/google/**'
     exclude 'com/fasterxml/**'
