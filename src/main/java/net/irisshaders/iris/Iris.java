@@ -142,10 +142,15 @@ public class Iris {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(this::setup);
 
+		modEventBus.addListener(Iris::onRegisterKeyMappings);
+		modEventBus.addListener(Iris::onClientSetup);
+
+		MinecraftForge.EVENT_BUS.addListener(Iris::onKeyInput);
+		MinecraftForge.EVENT_BUS.addListener(Iris::onClientTick);
+
 		logger.info("ForgeOculus: Mod instance created successfully.");
 	}
 
-	// 2. THIS IS YOUR SETUP METHOD
 	private void setup(final FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
 			// Put your initialization logic here (configs, folders, etc.)
@@ -739,7 +744,7 @@ public class Iris {
 	public static String getVersion() {
 		return ModList.get().getModContainerById("oculus") // Use your mod's ID from mods.toml
 				.map(container -> container.getModInfo().getVersion().toString())
-				.orElse("1.8.7"); // Fallback string if something goes wrong
+				.orElse("1.8.7.beta1"); // Fallback string if something goes wrong
 	}
 
 	public static String getFormattedVersion() {

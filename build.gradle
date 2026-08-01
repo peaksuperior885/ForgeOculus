@@ -2,9 +2,11 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
+    id 'application'
     id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7.+'
+    id 'com.gradleup.shadow' version '9.4.2'
 }
 
 group = maven_group
@@ -59,15 +61,7 @@ repositories {
     maven { url 'https://cursemaven.com' }
     maven { url 'https://api.modrinth.com/maven' }
     maven { url 'https://maven.blamejared.com/' }
-    maven {
-        url "https://maven.irisshaders.net/repositories/releases"
-        content {
-            includeGroup "net.irisshaders"
-            includeGroup "net.irisshaders.iris"
-            includeGroup "io.github.douira"
-        }
-    }
-    maven { url = "https://maven.taumc.org/releases" }
+    maven { url "https://maven.taumc.org/releases" }
 }
 
 mixin {
@@ -75,29 +69,28 @@ mixin {
     config "mixins.oculus.json"
 }
 
-// Deps to embed directly inside the jar at class level (fat jar)
 configurations {
     bundle
+    implementation.extendsFrom bundle
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation "io.github.llamalad7:mixinextras-common:0.5.3"
-    implementation "io.github.llamalad7:mixinextras-forge:0.5.3"
+    compileOnly "io.github.llamalad7:mixinextras-common:0.5.3"
     annotationProcessor "io.github.llamalad7:mixinextras-common:0.5.3"
-    annotationProcessor "io.github.llamalad7:mixinextras-forge:0.5.3"
+    runtimeOnly "io.github.llamalad7:mixinextras-forge:0.5.3"
 
     bundle "org.antlr:antlr4-runtime:4.13.1"
-    implementation "org.antlr:antlr4-runtime:4.13.1"
-
-    bundle("org.taumc:glsl-transformation-lib:0.2.0-20.ge3cb096") { transitive = false }
-    implementation("org.taumc:glsl-transformation-lib:0.2.0-20.ge3cb096") { transitive = false }
-
+    bundle files("libs/taumc-glsl.jar")
     bundle files('libs/glsl-transformer-2.0.1.jar')
-    implementation files('libs/glsl-transformer-2.0.1.jar')
+    bundle 'org.anarres:jcpp:1.4.14'
+    bundle 'blue.endless:jankson:1.2.3'
 
-    compileOnly fg.deobf(group: 'flatdir', name: 'Beddium', version: '1.0.10') { transitive = false }
+    runtimeOnly files("libs/taumc-glsl.jar")
+    runtimeOnly files('libs/glsl-transformer-2.0.1.jar')
+
+    compileOnly fg.deobf(group: 'flatdir', name: 'Beddium', version: '1.0.10')
     implementation fg.deobf("maven.modrinth:distanthorizonsapi:3.0.0")
 
     implementation 'com.github.zafarkhaja:java-semver:0.9.0'
@@ -106,20 +99,52 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
-// Fat jar - embed bundle deps as classes directly into the jar
-// This means .\gradlew jar produces a single self-contained jar
-jar {
-    from {
-        configurations.bundle.collect { it.isDirectory() ? it : zipTree(it) }
+tasks.shadowJar {
+    archiveClassifier.set('all')
+    configurations = [project.configurations.bundle]
+
+    relocate 'org.anarres.cpp', "${maven_group}.bundle.jcpp"
+    relocate 'org.taumc.glsl', "${maven_group}.bundle.glsl"
+    relocate 'io.github.douira.glsl_transformer', "${maven_group}.bundle.glsl"
+    relocate 'org.antlr.v4', "${maven_group}.bundle.antlr"
+    relocate 'blue.endless', "${maven_group}.bundle.jankson"
+
+    dependencies {
+        exclude(dependency('org.jetbrains.kotlin:.*'))
+        exclude(dependency('org.slf4j:.*'))
+        exclude(dependency('net.sf.jopt-simple:.*'))
+        exclude(dependency('com.google.code.gson:gson:.*'))
     }
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    exclude 'kotlin/**'
+    exclude 'kotlinx/**'
+    exclude 'META-INF/kotlin*'
+    exclude 'META-INF/versions/**'
+    exclude 'org/apache/**'
+    exclude 'com/google/**'
+    exclude 'com/fasterxml/**'
+    exclude 'org/jetbrains/annotations/**'
+    exclude 'org/json/**'
+    exclude 'org/jsoup/**'
+    exclude 'org/jspecify/**'
+    exclude 'org/mozilla/**'
+    exclude 'org/intellij/**'
+}
+
+application {
+    mainClass = 'net.irisshaders.iris.LaunchWarn'
+}
+
+jar{
     manifest {
         attributes([
-                'MixinConfigs': 'mixins.oculus.json,mixins.oculus.fantastic.json,mixins.oculus.vertexformat.json,mixins.oculus.bettermipmaps.json,mixins.oculus.fixes.maxfpscrash.json,oculus-batched-entity-rendering.mixins.json,mixins.oculus.compat.embeddium.json',
-                'Main-Class': 'net.irisshaders.iris.LaunchWarn'
+                'MixinConfigs': 'mixins.oculus.json,mixins.oculus.vertexformat.json,mixins.oculus.bettermipmaps.json,mixins.oculus.fixes.maxfpscrash.json,oculus-batched-entity-rendering.mixins.json,mixins.oculus.compat.embeddium.json',
+                'Main-Class': application.mainClass
         ])
     }
 }
+
+tasks.build.dependsOn shadowJar
 
 tasks.named('processResources', ProcessResources).configure {
     def props = [
@@ -133,11 +158,30 @@ tasks.named('processResources', ProcessResources).configure {
             mod_license             : mod_license,
             mod_version             : mod_version,
             mod_authors             : mod_authors,
-            mod_description         : mod_description
+            mod_description         : mod_description,
     ]
     inputs.properties props
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand props
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.shadow
+
+            groupId = project.group
+            artifactId = base.archivesName.get()
+            version = project.version
+        }
+    }
+
+    repositories {
+        maven {
+            name = "githubPages"
+            url = uri("${buildDir}/repo")
+        }
     }
 }
 
