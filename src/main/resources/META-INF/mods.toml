@@ -7,7 +7,7 @@ issueTrackerURL="https://github.com/Yuqi154/NeOculus/issues"
 [[mods]]
 modId="oculus"
 version="${mod_version}"
-displayURL = "https://curseforge.com/minecraft/mc-mods/neoculus"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/forgeoculus"
 displayName="ForgeOculus"
 provides=["iris"]
 logoFile="forgeoculus-logo.png"

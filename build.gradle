@@ -7,6 +7,7 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7.+'
     id 'com.gradleup.shadow' version '9.4.2'
+    id 'com.peak885.jarjar-alternative' version '1.2-BETA'
 }
 
 group = maven_group
@@ -62,6 +63,7 @@ repositories {
     maven { url 'https://api.modrinth.com/maven' }
     maven { url 'https://maven.blamejared.com/' }
     maven { url "https://maven.taumc.org/releases" }
+    maven { url "https://raw.githubusercontent.com/peaksuperior885/peaks_maven/main/files/" }
 }
 
 mixin {
@@ -92,6 +94,9 @@ dependencies {
 
     compileOnly fg.deobf(group: 'flatdir', name: 'Beddium', version: '1.0.10')
     implementation fg.deobf("maven.modrinth:distanthorizonsapi:3.0.0")
+    bundle("org.apache.commons:commons-collections4:4.5.0")
+
+    jarjar("com.peak885.emberium.emberium:emberium:1.0.0") { transitive = false }
 
     implementation 'com.github.zafarkhaja:java-semver:0.9.0'
     implementation 'org.apache.ant:ant:1.10.14'
@@ -100,14 +105,21 @@ dependencies {
 }
 
 tasks.shadowJar {
+    dependsOn tasks.getByName("jarjar-alternative")
+
     archiveClassifier.set('all')
     configurations = [project.configurations.bundle]
+
+    from(tasks.getByName("jarjar-alternative").outputs.files.singleFile) {
+        into 'META-INF/jarjar'
+    }
 
     relocate 'org.anarres.cpp', "${maven_group}.bundle.jcpp"
     relocate 'org.taumc.glsl', "${maven_group}.bundle.glsl"
     relocate 'io.github.douira.glsl_transformer', "${maven_group}.bundle.glsl"
     relocate 'org.antlr.v4', "${maven_group}.bundle.antlr"
     relocate 'blue.endless', "${maven_group}.bundle.jankson"
+    relocate 'org.apache.commons.collections4', "${maven_group}.bundle.apache.commons.collections4"
 
     dependencies {
         exclude(dependency('org.jetbrains.kotlin:.*'))
@@ -121,7 +133,6 @@ tasks.shadowJar {
     exclude 'META-INF/kotlin*'
     exclude 'META-INF/versions/**'
     exclude 'javax/**'
-    exclude 'org/apache/**'
     exclude 'com/google/**'
     exclude 'com/fasterxml/**'
     exclude 'org/jetbrains/annotations/**'

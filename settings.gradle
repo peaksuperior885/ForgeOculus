@@ -6,6 +6,7 @@ pluginManagement {
         }
         maven { url = 'https://maven.minecraftforge.net/releases' }
         maven { url = 'https://maven.parchmentmc.org' }
+        maven {url "https://raw.githubusercontent.com/peaksuperior885/peaks_maven/main/files/" }
         mavenCentral()
         gradlePluginPortal()
     }

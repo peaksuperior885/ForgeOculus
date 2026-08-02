@@ -744,7 +744,7 @@ public class Iris {
 	public static String getVersion() {
 		return ModList.get().getModContainerById("oculus") // Use your mod's ID from mods.toml
 				.map(container -> container.getModInfo().getVersion().toString())
-				.orElse("1.8.7.beta1"); // Fallback string if something goes wrong
+				.orElse("1.8.8"); // Fallback string if something goes wrong
 	}
 
 	public static String getFormattedVersion() {
