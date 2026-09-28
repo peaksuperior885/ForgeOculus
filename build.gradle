@@ -63,7 +63,7 @@ repositories {
     maven { url 'https://api.modrinth.com/maven' }
     maven { url 'https://maven.blamejared.com/' }
     maven { url "https://maven.taumc.org/releases" }
-    maven { url "https://raw.githubusercontent.com/peaksuperior885/peaks_maven/main/files/" }
+    maven { url "https://peaksuperior885.github.io/peaks_maven/files/" }
 }
 
 mixin {
